@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "catalogue_id": "CATALOG-NTHEEMBA-SALON-SEED-01",
+  "status": "review",
+  "business_types": [
+    { "id": "BT-SALON-BEAUTY", "name": "Salon & Beauty", "status": "published" }
+  ],
+  "categories": [
+    { "id": "CAT-SALON-HAIR-EXTENSIONS", "name": "Hair Extensions", "business_type_id": "BT-SALON-BEAUTY", "status": "published" },
+    { "id": "CAT-SALON-SHAMPOO-CONDITIONER", "name": "Shampoo & Conditioner", "business_type_id": "BT-SALON-BEAUTY", "status": "published" },
+    { "id": "CAT-SALON-HAIR-OILS", "name": "Hair Oils", "business_type_id": "BT-SALON-BEAUTY", "status": "published" }
+  ],
+  "manufacturers": [
+    { "id": "MFG-NTHEEMBA", "name": "Ntheemba", "status": "published", "source": { "type": "internal", "reference": "Ntheemba generated identifier", "verification_status": "verified" } }
+  ],
+  "brands": [
+    { "id": "BRD-GENERIC-BEAUTY", "name": "Generic Beauty", "manufacturer_id": "MFG-NTHEEMBA", "status": "published" }
+  ],
+  "products": [
+    { "id": "PRD-BRAIDING-HAIR", "name": "Braiding Hair", "business_type_id": "BT-SALON-BEAUTY", "category_id": "CAT-SALON-HAIR-EXTENSIONS", "brand_id": "BRD-GENERIC-BEAUTY", "description": "Generic braiding-hair product family; colour and length remain variant attributes.", "status": "published" },
+    { "id": "PRD-HAIR-OIL", "name": "Hair Oil", "business_type_id": "BT-SALON-BEAUTY", "category_id": "CAT-SALON-HAIR-OILS", "brand_id": "BRD-GENERIC-BEAUTY", "description": "Generic hair-oil product family pending brand-specific review.", "status": "review" }
+  ],
+  "variants": [
+    { "id": "VAR-BRAIDING-HAIR-24IN-1PK", "name": "Braiding Hair 24 inch one pack", "product_id": "PRD-BRAIDING-HAIR", "inventory_type": "packaged", "size": 24, "unit": "inch", "packaging": "one pack", "status": "published" },
+    { "id": "VAR-HAIR-OIL-100ML-BOTTLE", "name": "Hair Oil 100 ml bottle", "product_id": "PRD-HAIR-OIL", "inventory_type": "packaged", "size": 100, "unit": "ml", "packaging": "bottle", "status": "review" }
+  ],
+  "barcodes": [
+    { "id": "BAR-NTH-BRAIDING-HAIR-24IN", "variant_id": "VAR-BRAIDING-HAIR-24IN-1PK", "value": "NTH-SALON-BRAIDING-HAIR-24IN-1PK", "kind": "ntheemba_generated", "symbology": "CODE_128", "verification_status": "verified" },
+    { "id": "BAR-NTH-HAIR-OIL-100ML", "variant_id": "VAR-HAIR-OIL-100ML-BOTTLE", "value": "NTH-SALON-HAIR-OIL-100ML-BOTTLE", "kind": "ntheemba_generated", "symbology": "CODE_128", "verification_status": "verified" }
+  ],
+  "media": []
+}

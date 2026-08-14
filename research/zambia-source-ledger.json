@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "zambia-catalogue-source-ledger-v1",
+  "country": "ZM",
+  "sources": [
+    {
+      "id": "SRC-COCA-ZM-500ML",
+      "url": "https://www.coca-cola.com/xe/en/legal/terms-and-conditions-zambia-scan-enjoy",
+      "publisher": "The Coca-Cola Company / Coca-Cola Beverages Zambia",
+      "capturedAt": "2026-07-17",
+      "evidence": "The Zambia promotion names Coca-Cola Beverages Zambia and lists Coca-Cola, Coca-Cola No Sugar, Fanta and Sprite in 500 ml products.",
+      "reliability": "primary"
+    },
+    {
+      "id": "SRC-ZPPA-SOFT-DRINK-500ML",
+      "url": "https://www.zppa.org.zm/documents/20182/258675/Q4%2B2025%2BMPI.pdf/0f1f94cf-5d92-47db-9e17-b0b2c0c061b2",
+      "publisher": "Zambia Public Procurement Authority",
+      "capturedAt": "2026-07-17",
+      "evidence": "The Q4 2025 market price index lists disposable 500 ml Coke/Sprite/Fanta products across Zambia.",
+      "reliability": "government_market_reference"
+    },
+    {
+      "id": "SRC-FANTA-ZM-500ML",
+      "url": "https://www.ubuy.com.zm/product/D37O0FAG-fanta-orange-500ml",
+      "publisher": "Ubuy Zambia",
+      "capturedAt": "2026-07-17",
+      "evidence": "The listing identifies Fanta Orange as a 500 ml product available to shop in Zambia. It is supporting evidence only, not proof of a locally manufactured package or barcode.",
+      "reliability": "retailer_supporting"
+    },
+    {
+      "id": "SRC-CHITAMBO-FANTA-1L",
+      "url": "https://www.chitambocouncil.gov.zm/wp-content/uploads/2025/11/2nd-QUARTER-COUNCIL-MEETING-15th-FEBRUARY-2024-.pdf",
+      "publisher": "Chitambo Town Council",
+      "capturedAt": "2026-07-17",
+      "evidence": "The public-health report identifies Fanta Orange in 500 ml and 1 L quantities during a Zambia inspection. It confirms observed market presence, not an exact barcode or production source.",
+      "reliability": "government_market_reference"
+    },
+    {
+      "id": "SRC-TRADE-KINGS-BOOM",
+      "url": "https://www.tradekings.co.zm/product/product-main-template/",
+      "publisher": "Trade Kings Group",
+      "capturedAt": "2026-07-17",
+      "evidence": "The official product page names Boom Detergent Paste and lists pouch sizes 20 g, 40 g, 50 g, 100 g and box sizes 100 g, 200 g, 300 g, 400 g.",
+      "reliability": "primary"
+    },
+    {
+      "id": "SRC-BIGTREE-PORTFOLIO",
+      "url": "https://www.bigtreebev.com/",
+      "publisher": "BigTree Beverages",
+      "capturedAt": "2026-07-17",
+      "evidence": "Official BigTree site identifies the company as a Zambia beverage producer and presents its beverage portfolio categories.",
+      "reliability": "primary"
+    },
+    {
+      "id": "SRC-NANDOS-FRUITICANA-430ML",
+      "url": "https://www.nandos.co.zm/eat/menu",
+      "publisher": "Nando's Zambia",
+      "capturedAt": "2026-07-17",
+      "evidence": "The Zambia menu lists Fruiticana at 430 ml.",
+      "reliability": "retailer_supporting"
+    },
+    {
+      "id": "SRC-ZPPA-WILDCAT-500ML",
+      "url": "https://eprocure.zppa.org.zm/epps/eawarding/showDetailsOpenedTender.do?resourceId=11084679",
+      "publisher": "Zambia Public Procurement Authority",
+      "capturedAt": "2026-07-17",
+      "evidence": "The opened-bid detail lists Wildcat 500mls.",
+      "reliability": "government_procurement"
+    },
+    {
+      "id": "SRC-KASAMA-SUNDANCE-500ML",
+      "url": "https://www.kasamacouncil.gov.zm/wp-content/uploads/2025/12/11TH-ORDINARY-COUNCIL-BOOKLET-1ST-QUARTER-2024-1.pdf",
+      "publisher": "Kasama Municipal Council",
+      "capturedAt": "2026-07-17",
+      "evidence": "The public-health inspection record lists Sun Dance at 500 ml.",
+      "reliability": "government_market_reference"
+    },
+    {
+      "id": "SRC-ZAMSTATS-TOMATOES-KG",
+      "url": "https://www.zamstats.gov.zm/national-average-prices-for-selected-products-september-2024/",
+      "publisher": "Zambia Statistics Agency",
+      "capturedAt": "2026-07-17",
+      "evidence": "The national average price table identifies tomatoes with a kilogram unit.",
+      "reliability": "government_market_reference"
+    },
+    {
+      "id": "SRC-GTIN-5449000000996-NOT-ZM-500ML",
+      "url": "https://data.wireshape.com/registry/0x0000000000000000000000000000000000000000000000000005449000000996",
+      "publisher": "WireshaPe product registry",
+      "capturedAt": "2026-07-17",
+      "evidence": "This GTIN is described as Coca-Cola Original Taste 330 ml can in Belgium/Luxembourg. It must not be assigned to a Zambia 500 ml variant without package-level evidence.",
+      "reliability": "barcode_reference"
+    }
+  ]
+}

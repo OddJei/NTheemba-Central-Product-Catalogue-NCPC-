@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ntheemba Central Catalogue</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --bg:#f6f7f9;
+      --panel:#ffffff;
+      --panel-soft:#f0f4f7;
+      --ink:#172027;
+      --muted:#64717d;
+      --line:#d8e0e7;
+      --brand:#0b6b55;
+      --brand-strong:#07513f;
+      --blue:#255f9e;
+      --amber:#986b00;
+      --red:#a83b34;
+      --green:#12713f;
+      --shadow:0 10px 28px rgba(23,32,39,.08);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-size:15px}
+    button,input,select{font:inherit}
+    button,.button{
+      min-height:38px;border:1px solid transparent;border-radius:7px;background:var(--brand);
+      color:#fff;padding:8px 12px;font-weight:700;cursor:pointer;display:inline-flex;gap:7px;align-items:center;justify-content:center;
+    }
+    button:hover,.button:hover{background:var(--brand-strong)}
+    button.secondary,.button.secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+    button.secondary:hover,.button.secondary:hover{background:var(--panel-soft)}
+    button.ghost{background:transparent;color:var(--ink);border-color:transparent}
+    button.ghost:hover{background:var(--panel-soft)}
+    button.danger{background:#fff;color:var(--red);border-color:#e5c4c1}
+    button.danger:hover{background:#fff3f2}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    input,select{
+      min-height:38px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);
+      padding:8px 10px;outline:none;width:100%;
+    }
+    input:focus,select:focus,button:focus-visible,.button:focus-visible{outline:3px solid rgba(37,95,158,.25);outline-offset:1px}
+    label{font-size:12px;font-weight:800;color:#4e5b66;text-transform:uppercase;letter-spacing:.04em}
+    .file-input{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    .shell{max-width:1360px;margin:0 auto;padding:22px 18px 34px}
+    .topbar{display:flex;gap:18px;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+    .brand h1{font-size:30px;line-height:1.1;margin:0 0 7px}
+    .brand p{margin:0;color:var(--muted);max-width:760px;line-height:1.45}
+    .badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:9px}
+    .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#45515c;padding:4px 9px;font-size:12px;font-weight:800}
+    .badge.good{color:var(--green);border-color:#b9dac6;background:#f1faf4}
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+    .notice{border:1px solid var(--line);border-left:4px solid var(--blue);background:#fff;border-radius:7px;padding:10px 12px;color:#43505b;box-shadow:var(--shadow);margin-bottom:14px}
+    .layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:start}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+    .panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 15px;border-bottom:1px solid var(--line)}
+    .panel-head h2{font-size:15px;margin:0}
+    .panel-body{padding:15px}
+    .stack{display:grid;gap:12px}
+    .field{display:grid;gap:6px}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+    .metric{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 13px;min-height:78px}
+    .metric b{display:block;font-size:25px;line-height:1.1}
+    .metric span{color:var(--muted);font-size:13px;font-weight:700}
+    .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0 10px;background:#fff;border-radius:8px 8px 0 0}
+    .tab{border:0;border-radius:0;background:transparent;color:var(--muted);padding:13px 10px;border-bottom:3px solid transparent;min-height:44px}
+    .tab:hover{background:transparent;color:var(--ink)}
+    .tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+    .view{display:none}
+    .view.active{display:block}
+    .table-tools{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px auto;gap:8px;padding:14px;border-bottom:1px solid var(--line)}
+    .table-wrap{overflow:auto;max-height:680px}
+    table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px}
+    th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+    th{position:sticky;top:0;background:#fbfcfd;z-index:1;color:#53606b;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+    tr:hover td{background:#fbfcfd}
+    .product-cell{display:grid;grid-template-columns:42px minmax(190px,1fr);gap:10px;align-items:center}
+    .thumb{inline-size:42px;block-size:42px;border-radius:7px;background:#dfe7ee;color:#30404d;display:grid;place-items:center;font-weight:900;overflow:hidden}
+    .thumb img{inline-size:100%;block-size:100%;object-fit:cover}
+    .main-text{font-weight:800;color:var(--ink)}
+    .sub-text{color:var(--muted);font-size:12px;margin-top:2px}
+    .code{font-family:"Cascadia Mono","SFMono-Regular",Consolas,monospace;font-size:12px;color:#365064}
+    .status{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800;text-transform:capitalize;background:#eef2f5;color:#45515c}
+    .status.published{background:#e5f6ec;color:var(--green)}
+    .status.review{background:#fff5d8;color:var(--amber)}
+    .status.draft{background:#e8f0fb;color:var(--blue)}
+    .status.retired{background:#fae7e5;color:var(--red)}
+    .actions{display:flex;gap:6px;flex-wrap:wrap}
+    .empty{padding:46px 18px;text-align:center;color:var(--muted)}
+    .candidate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .candidate-grid .wide{grid-column:1/-1}
+    .audit-grid{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+    .audit-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:12px}
+    .audit-card strong{display:block;font-size:22px}
+    .gate-list{display:grid;gap:8px}
+    .gate{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:7px;padding:10px;background:#fbfcfd}
+    .sample-list{margin:0;padding-left:18px;color:#43505b}
+    .sample-list li{margin:5px 0}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .muted{color:var(--muted)}
+    @media(max-width:980px){
+      .layout{grid-template-columns:1fr}
+      .topbar{display:block}
+      .toolbar{justify-content:flex-start;margin-top:14px}
+      .metrics,.audit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .table-tools{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:620px){
+      .shell{padding:16px 10px 26px}
+      .brand h1{font-size:25px}
+      .metrics,.audit-grid,.candidate-grid,.split,.table-tools{grid-template-columns:1fr}
+      .tabs{overflow:auto}
+      th,td{padding:10px 9px}
+      .product-cell{grid-template-columns:36px minmax(170px,1fr)}
+      .thumb{inline-size:36px;block-size:36px}
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="badge-row">
+          <span class="badge good">NCC admin</span>
+          <span class="badge">TradeFlow safe sync</span>
+          <span class="badge">Draft gated imports</span>
+        </div>
+        <h1>Ntheemba Central Catalogue</h1>
+        <p>Canonical product identity for Ntheemba and TradeFlow. Business stock, price, cost, supplier, and profit stay outside NCC.</p>
+      </div>
+      <div class="toolbar">
+        <button id="open-api">Open API</button>
+        <button data-seed="seeds/retail-grocery-v1.json" class="secondary">Retail seed</button>
+        <button data-seed="seeds/salon-beauty-v1.json" class="secondary">Salon seed</button>
+        <label class="button secondary" for="catalog-file">Open catalog JSON</label>
+        <input class="file-input" id="catalog-file" type="file" accept="application/json,.json">
+        <label class="button secondary" for="research-file">Audit research JSON</label>
+        <input class="file-input" id="research-file" type="file" accept="application/json,.json">
+        <button id="export" class="secondary" disabled>Export</button>
+      </div>
+    </header>
+
+    <div id="message" class="notice">Load a local API catalogue, seed file, catalogue JSON, or Apps Script research manifest.</div>
+
+    <section class="metrics" id="metrics" aria-label="Catalogue metrics"></section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head"><h2>Add Review Candidate</h2><span class="status draft">Local</span></div>
+        <form id="draft-form" class="panel-body stack">
+          <div class="field"><label for="product-name">Product family</label><input id="product-name" required autocomplete="off"></div>
+          <div class="field"><label for="category">Category</label><select id="category" required></select></div>
+          <div class="field"><label for="variant-name">Variant</label><input id="variant-name" required autocomplete="off"></div>
+          <div class="split">
+            <div class="field"><label for="inventory-type">Inventory type</label><select id="inventory-type"><option value="packaged">Packaged</option><option value="weight_based">Weight based</option><option value="volume_based">Volume based</option><option value="piece_based">Piece based</option></select></div>
+            <div class="field"><label for="unit">Unit</label><input id="unit" required placeholder="ml, kg, piece"></div>
+          </div>
+          <div class="split">
+            <div class="field"><label for="size">Size</label><input id="size" type="number" min="0.001" step="any"></div>
+            <div class="field"><label for="barcode">Barcode</label><input id="barcode" autocomplete="off"></div>
+          </div>
+          <button type="submit">Add for review</button>
+        </form>
+      </aside>
+
+      <section class="panel">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="browse" type="button">Browse</button>
+          <button class="tab" data-tab="review" type="button">Review Queue</button>
+          <button class="tab" data-tab="research" type="button">Research Audit</button>
+        </div>
+
+        <div id="browse" class="view active">
+          <div class="table-tools">
+            <input id="search" type="search" placeholder="Search product, variant, barcode, or ID">
+            <select id="status-filter"><option value="">All statuses</option><option value="published">Published</option><option value="review">Review</option><option value="draft">Draft</option><option value="retired">Retired</option></select>
+            <select id="category-filter"><option value="">All categories</option></select>
+            <button id="clear-filters" class="secondary" type="button">Clear</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Variant</th><th>Category</th><th>Barcode</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="review" class="view">
+          <div class="table-tools">
+            <input id="review-search" type="search" placeholder="Search review queue">
+            <select id="review-category-filter"><option value="">All categories</option></select>
+            <button id="approve-visible" type="button">Approve visible</button>
+            <button id="reject-visible" class="danger" type="button">Reject visible</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Variant</th><th>Category</th><th>Barcode</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="review-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="research" class="view">
+          <div id="research-empty" class="empty">No research manifest loaded.</div>
+          <div id="research-audit" class="panel-body" hidden>
+            <div class="audit-grid" id="research-metrics"></div>
+            <div class="split">
+              <section>
+                <h2>Publication Gates</h2>
+                <div id="gate-list" class="gate-list"></div>
+              </section>
+              <section>
+                <h2>Import Notes</h2>
+                <ul id="research-notes" class="sample-list"></ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    let catalogue = null;
+    let apiMode = false;
+    let researchAudit = null;
+    const $ = id => document.getElementById(id);
+    const safe = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g,'');
+    const plural = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
+    const idFor = (prefix, name) => `${prefix}-${String(name).toUpperCase().replace(/[^A-Z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,42)}-${Date.now().toString(36).toUpperCase()}`;
+    const byId = records => Object.fromEntries((records || []).map(record => [record.id, record]));
+
+    function setMessage(text, tone = 'info') {
+      $('message').textContent = text;
+      $('message').style.borderLeftColor = tone === 'error' ? 'var(--red)' : tone === 'success' ? 'var(--green)' : tone === 'warn' ? 'var(--amber)' : 'var(--blue)';
+    }
+
+    function showTab(name) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === name));
+      document.querySelectorAll('.view').forEach(view => view.classList.toggle('active', view.id === name));
+    }
+
+    function requireCatalogue(data) {
+      if (!data || data.schema_version !== '1.0' || !Array.isArray(data.variants)) throw Error('This is not a Central Catalogue v1 document.');
+      return data;
+    }
+
+    function load(data, label, options = {}) {
+      catalogue = requireCatalogue(data);
+      apiMode = options.api === true;
+      fillCategoryControls();
+      $('export').disabled = false;
+      setMessage(`Loaded ${label}. Catalogue status: ${catalogue.status || 'unknown'}.`, 'success');
+      render();
+    }
+
+    async function loadSeed(path) {
+      try {
+        const response = await fetch(path);
+        if (!response.ok) throw Error('Seed not found.');
+        load(await response.json(), path.split('/').pop());
+      } catch (error) {
+        setMessage('Could not load the seed. Start the local server or use Open catalog JSON.', 'error');
+      }
+    }
+
+    async function openApi() {
+      try {
+        const response = await fetch('/api/catalogue');
+        if (!response.ok) throw Error('Local API is not reachable.');
+        load(await response.json(), 'local API catalogue', { api: true });
+      } catch (error) {
+        setMessage('Could not reach the local API. Run npm start, then open http://localhost:4173.', 'error');
+      }
+    }
+
+    function fillCategoryControls() {
+      const options = ['<option value="">All categories</option>', ...(catalogue?.categories || []).map(category => `<option value="${safe(category.id)}">${safe(category.name)}</option>`)].join('');
+      $('category-filter').innerHTML = options;
+      $('review-category-filter').innerHTML = options;
+      $('category').innerHTML = (catalogue?.categories || []).map(category => `<option value="${safe(category.id)}">${safe(category.name)}</option>`).join('');
+    }
+
+    function mediaFor(variantId, productId) {
+      return (catalogue.media || []).find(item => item.variant_id === variantId || item.product_id === productId);
+    }
+
+    function thumb(label, media) {
+      if (media?.source_url || media?.sourceUrl) return `<span class="thumb"><img alt="" src="${safe(media.source_url || media.sourceUrl)}"></span>`;
+      const initials = String(label || 'NCC').split(/\s+/).slice(0,2).map(part => part[0]).join('').toUpperCase();
+      return `<span class="thumb">${safe(initials || 'N')}</span>`;
+    }
+
+    function rowsFor({ reviewOnly = false, searchId = 'search', categoryId = 'category-filter', statusId = 'status-filter' } = {}) {
+      if (!catalogue) return [];
+      const products = byId(catalogue.products);
+      const categories = byId(catalogue.categories);
+      const barcodesByVariant = {};
+      for (const barcode of catalogue.barcodes || []) (barcodesByVariant[barcode.variant_id] ??= []).push(barcode.value);
+      const term = $(searchId)?.value.trim().toLowerCase() || '';
+      const categoryFilter = $(categoryId)?.value || '';
+      const statusFilter = statusId ? ($(statusId)?.value || '') : '';
+      return (catalogue.variants || []).map(variant => {
+        const product = products[variant.product_id] || {};
+        const category = categories[product.category_id] || {};
+        const status = variant.status || product.status || 'draft';
+        return { variant, product, category, status, barcodes: barcodesByVariant[variant.id] || [], media: mediaFor(variant.id, product.id) };
+      }).filter(item => {
+        const haystack = [item.variant.id, item.variant.name, item.product.name, item.category.name, item.status, ...item.barcodes].join(' ').toLowerCase();
+        return (!reviewOnly || item.status === 'review' || item.product.status === 'review') &&
+          (!term || haystack.includes(term)) &&
+          (!categoryFilter || item.category.id === categoryFilter) &&
+          (!statusFilter || item.status === statusFilter);
+      });
+    }
+
+    function rowHtml(item) {
+      const barcodeText = item.barcodes.join(', ');
+      const canReview = item.status === 'review' || item.product.status === 'review';
+      return `<tr>
+        <td><div class="product-cell">${thumb(item.variant.name, item.media)}<div><div class="main-text">${safe(item.variant.name)}</div><div class="sub-text">${safe(item.product.name || 'No product family')}</div><div class="code">${safe(item.variant.id)}</div></div></div></td>
+        <td>${safe(item.category.name || 'Uncategorised')}</td>
+        <td class="code">${barcodeText ? safe(barcodeText) : '<span class="muted">None</span>'}</td>
+        <td><span class="status ${safe(item.status)}">${safe(item.status)}</span></td>
+        <td><div class="actions">${canReview ? `<button data-action="approve" data-variant="${safe(item.variant.id)}" type="button">Approve</button><button data-action="reject" data-variant="${safe(item.variant.id)}" class="danger" type="button">Reject</button>` : '<span class="muted">No action</span>'}</div></td>
+      </tr>`;
+    }
+
+    function renderMetrics() {
+      const data = catalogue || { products:[], variants:[], barcodes:[], categories:[] };
+      const reviewCount = (data.variants || []).filter(variant => variant.status === 'review').length;
+      const publishedCount = (data.variants || []).filter(variant => variant.status === 'published').length;
+      const metrics = [
+        ['Products', data.products?.length || 0],
+        ['Variants', data.variants?.length || 0],
+        ['Published', publishedCount],
+        ['Review queue', reviewCount],
+      ];
+      $('metrics').innerHTML = metrics.map(([label, value]) => `<div class="metric"><b>${value}</b><span>${label}</span></div>`).join('');
+    }
+
+    function renderTables() {
+      const browseRows = rowsFor();
+      $('rows').innerHTML = browseRows.length ? browseRows.map(rowHtml).join('') : '<tr><td class="empty" colspan="5">No catalogue records match the filters.</td></tr>';
+      const reviewRows = rowsFor({ reviewOnly: true, searchId: 'review-search', categoryId: 'review-category-filter', statusId: null });
+      $('review-rows').innerHTML = reviewRows.length ? reviewRows.map(rowHtml).join('') : '<tr><td class="empty" colspan="5">No records are waiting for review.</td></tr>';
+    }
+
+    function renderResearchAudit() {
+      if (!researchAudit) {
+        $('research-empty').hidden = false;
+        $('research-audit').hidden = true;
+        return;
+      }
+      $('research-empty').hidden = true;
+      $('research-audit').hidden = false;
+      const metrics = [
+        ['Bundles', researchAudit.bundles],
+        ['Would import', researchAudit.wouldImport],
+        ['Duplicates', researchAudit.duplicates],
+        ['Protected fields', researchAudit.protectedFieldErrors],
+      ];
+      $('research-metrics').innerHTML = metrics.map(([label, value]) => `<div class="audit-card"><strong>${value}</strong><span class="muted">${label}</span></div>`).join('');
+      $('gate-list').innerHTML = Object.entries(researchAudit.gates).map(([gate, count]) => `<div class="gate"><span>${safe(gate || 'No gate')}</span><strong>${count}</strong></div>`).join('');
+      $('research-notes').innerHTML = researchAudit.notes.map(note => `<li>${safe(note)}</li>`).join('');
+    }
+
+    function render() {
+      renderMetrics();
+      renderTables();
+      renderResearchAudit();
+    }
+
+    function auditResearchManifest(manifest) {
+      if (!manifest || manifest.schemaVersion !== 'apps-script-research-import-v1' || !Array.isArray(manifest.bundles)) throw Error('Expected an apps-script-research-import-v1 manifest.');
+      const protectedFields = new Set(['sellingprice','price','extractedprice','cost','costprice','unitcost','stock','currentstock','openingstock','availablequantity','quantityremaining','quantityonhand','maxstock','reorderlevel','supplier','supplierid','suppliername','preferredsupplier','batches','inventorybatches','stockentries','stockadjustments','revenue','expenses','sales','profit','profitmargin','margin','inventoryvalue']);
+      const seen = new Set();
+      const existing = new Set((catalogue?.products || []).map(product => normalize(`${product.category_id}|${product.name}`)));
+      const gates = {};
+      let protectedFieldErrors = 0;
+      let duplicates = 0;
+      let wouldImport = 0;
+      let missingSources = 0;
+      const sourceIds = new Set((manifest.sources || []).map(source => source.id));
+      function scan(value) {
+        if (!value || typeof value !== 'object') return;
+        if (Array.isArray(value)) return value.forEach(scan);
+        for (const [key, child] of Object.entries(value)) {
+          if (protectedFields.has(normalize(key))) protectedFieldErrors++;
+          scan(child);
+        }
+      }
+      for (const bundle of manifest.bundles) {
+        scan(bundle);
+        for (const sourceId of bundle.research?.sourceIds || []) if (sourceIds.size && !sourceIds.has(sourceId)) missingSources++;
+        const gate = bundle.research?.publicationGate || 'manual_review_required';
+        gates[gate] = (gates[gate] || 0) + 1;
+        const key = normalize(`${bundle.category?.name || bundle.product?.categoryId || ''}|${bundle.product?.globalName || ''}`);
+        if (seen.has(key) || existing.has(key)) duplicates++;
+        else { seen.add(key); wouldImport++; }
+      }
+      const notes = [
+        `${plural(manifest.bundles.length, 'bundle')} in ${manifest.manifestId || 'manifest'}.`,
+        protectedFieldErrors ? `${protectedFieldErrors} protected TradeFlow field reference detected.` : 'No protected TradeFlow fields detected.',
+        missingSources ? `${missingSources} missing source reference detected.` : 'All source references resolve inside the manifest.',
+        'Apps Script importer will keep research products, variants, barcodes, and media draft gated.'
+      ];
+      return { bundles: manifest.bundles.length, wouldImport, duplicates, protectedFieldErrors, gates, notes };
+    }
+
+    async function reviewVariant(variantId, action) {
+      const variant = catalogue?.variants.find(item => item.id === variantId);
+      if (!variant) return;
+      const product = catalogue.products.find(item => item.id === variant.product_id);
+      if (apiMode) {
+        const response = await fetch(`/api/variants/${encodeURIComponent(variantId)}/review`, { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify({ action }) });
+        if (!response.ok) throw Error((await response.json()).error || 'Review failed.');
+        await openApi();
+        return;
+      }
+      variant.status = action === 'approve' ? 'published' : 'retired';
+      if (product) product.status = variant.status;
+      setMessage(`${action === 'approve' ? 'Approved' : 'Rejected'} ${variant.name}. Export to preserve the local change.`, 'success');
+      render();
+    }
+
+    document.querySelectorAll('[data-seed]').forEach(button => button.addEventListener('click', () => loadSeed(button.dataset.seed)));
+    document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => showTab(tab.dataset.tab)));
+    $('open-api').addEventListener('click', openApi);
+    $('search').addEventListener('input', renderTables);
+    $('status-filter').addEventListener('change', renderTables);
+    $('category-filter').addEventListener('change', renderTables);
+    $('review-search').addEventListener('input', renderTables);
+    $('review-category-filter').addEventListener('change', renderTables);
+    $('clear-filters').addEventListener('click', () => { $('search').value = ''; $('status-filter').value = ''; $('category-filter').value = ''; renderTables(); });
+    $('catalog-file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try { load(JSON.parse(await file.text()), file.name); } catch (error) { setMessage(error.message, 'error'); }
+    });
+    $('research-file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        researchAudit = auditResearchManifest(JSON.parse(await file.text()));
+        setMessage(`Audited ${file.name}. ${researchAudit.wouldImport} bundle records would import before admin review.`, researchAudit.protectedFieldErrors ? 'error' : 'success');
+        showTab('research');
+        render();
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    });
+    $('draft-form').addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!catalogue) { setMessage('Load a catalogue before adding a candidate.', 'warn'); return; }
+      const name = $('product-name').value.trim();
+      const variantName = $('variant-name').value.trim();
+      const categoryId = $('category').value;
+      const unit = $('unit').value.trim();
+      const barcode = $('barcode').value.trim();
+      const category = catalogue.categories.find(item => item.id === categoryId);
+      if (!name || !variantName || !unit || !category) return;
+      const payload = { product_name:name, variant_name:variantName, category_id:categoryId, unit, barcode, inventory_type:$('inventory-type').value, ...($('size').value ? { size:Number($('size').value) } : {}) };
+      const duplicate = catalogue.products.some(product => product.category_id === categoryId && normalize(product.name) === normalize(name)) || catalogue.variants.some(variant => normalize(variant.name) === normalize(variantName)) || (barcode && catalogue.barcodes.some(item => item.value === barcode));
+      if (duplicate) { setMessage('Possible duplicate found. Review the existing catalogue record first.', 'warn'); return; }
+      try {
+        if (apiMode) {
+          const response = await fetch('/api/candidates', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(payload) });
+          if (!response.ok) throw Error((await response.json()).error || 'Candidate was not saved.');
+          await openApi();
+        } else {
+          const productId = idFor('PRD', name);
+          const variantId = idFor('VAR', variantName);
+          catalogue.products.push({ id:productId, name, business_type_id:category.business_type_id, category_id:categoryId, status:'review', description:'Submitted for catalogue review.' });
+          catalogue.variants.push({ id:variantId, name:variantName, product_id:productId, inventory_type:payload.inventory_type, unit, status:'review', ...(payload.size ? { size:payload.size } : {}) });
+          if (barcode) catalogue.barcodes.push({ id:idFor('BAR', barcode), variant_id:variantId, value:barcode, kind:barcode.startsWith('NTH-') ? 'ntheemba_generated' : 'manufacturer', symbology:barcode.startsWith('NTH-') ? 'CODE_128' : 'EAN_13', verification_status:'unverified' });
+          setMessage(`Added ${variantName} for review. Export to preserve the local change.`, 'success');
+          render();
+        }
+        event.target.reset();
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    });
+    document.body.addEventListener('click', async event => {
+      const button = event.target.closest('[data-action][data-variant]');
+      if (!button) return;
+      try { await reviewVariant(button.dataset.variant, button.dataset.action); } catch (error) { setMessage(error.message, 'error'); }
+    });
+    $('approve-visible').addEventListener('click', async () => {
+      for (const item of rowsFor({ reviewOnly:true, searchId:'review-search', categoryId:'review-category-filter', statusId:null })) await reviewVariant(item.variant.id, 'approve');
+    });
+    $('reject-visible').addEventListener('click', async () => {
+      for (const item of rowsFor({ reviewOnly:true, searchId:'review-search', categoryId:'review-category-filter', statusId:null })) await reviewVariant(item.variant.id, 'reject');
+    });
+    $('export').addEventListener('click', () => {
+      if (!catalogue) return;
+      const blob = new Blob([JSON.stringify(catalogue, null, 2)], { type:'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${(catalogue.catalogue_id || 'ntheemba-catalogue').toLowerCase()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+    render();
+  </script>
+</body>
+</html>
