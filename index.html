@@ -1,0 +1,579 @@
+<!doctype html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ntheemba Central Product Catalogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy:#071a33;--navy2:#0d2d4d;--emerald:#188865;--emerald2:#42bd91;
+      --gold:#d6a13e;--paper:#fffdf7;--bg:#eef2f5;--ink:#151b25;--muted:#667085;
+      --line:#d9e0e8;--danger:#c93030;--warning:#a56b00;--info:#235ea8;
+      --shadow:0 14px 40px rgba(7,26,51,.09);--shadow-hover:0 18px 50px rgba(7,26,51,.14);--radius:14px;
+      --ease:cubic-bezier(.2,.8,.2,1);--fast:140ms;--normal:240ms;--slow:420ms
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}html,body{margin:0;min-height:100%;font:14px/1.52 Manrope,Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+    button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}.hidden{display:none!important}::selection{background:rgba(66,189,145,.25)}
+    .app{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+    .sidebar{position:sticky;top:0;height:100vh;padding:20px 14px;background:linear-gradient(180deg,#020710,var(--navy));color:#e7f2ef;overflow:auto}
+    .brand{display:flex;gap:11px;align-items:center;padding:4px 8px 23px}.brand-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--emerald2));font-weight:900;color:var(--navy);box-shadow:0 8px 25px rgba(66,189,145,.18);transition:transform var(--normal) var(--ease),box-shadow var(--normal) var(--ease)}.brand:hover .brand-mark{transform:rotate(-3deg) scale(1.04);box-shadow:0 12px 28px rgba(66,189,145,.27)}
+    .brand b{font-size:17px;display:block;color:white}.brand small{color:#9db3b0}.nav-label{padding:12px 10px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#77908c}
+    .nav-btn{width:100%;border:0;background:transparent;color:#d9e4e2;padding:10px 11px;margin:2px 0;border-radius:10px;text-align:left;display:flex;gap:9px;align-items:center;position:relative;transition:background var(--normal) var(--ease),color var(--normal) var(--ease),transform var(--fast) var(--ease)}
+    .nav-btn:hover,.nav-btn.active{background:rgba(66,189,145,.17);color:#fff;transform:translateX(2px)}.nav-btn.active:before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:99px;background:var(--emerald2);box-shadow:0 0 16px rgba(66,189,145,.55)}.nav-icon{width:20px;text-align:center}
+    .sidebar-foot{margin-top:25px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:11px;color:#9eb1b8;font-size:12px}
+    .shell{min-width:0}.topbar{height:70px;position:sticky;top:0;z-index:20;background:rgba(255,253,247,.95);backdrop-filter:blur(9px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:14px}
+    .global-search{max-width:520px;flex:1;position:relative}.global-search input{padding-left:38px}.global-search span{position:absolute;left:13px;top:10px;color:var(--muted)}
+    .top-actions{display:flex;gap:8px;align-items:center}.topbar.scrolled{box-shadow:0 10px 30px rgba(7,26,51,.06)}.content{max-width:1520px;margin:auto;padding:26px}.view{display:none}.view.active{display:block;animation:viewIn var(--normal) var(--ease) both}@keyframes viewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    h1{font-size:25px;color:var(--navy);margin:0 0 3px}h2{font-size:18px;color:var(--navy);margin:0 0 13px}h3{font-size:15px;margin:0 0 10px;color:var(--navy)}
+    .sub{color:var(--muted);margin:0 0 19px}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:18px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    button{border:0;border-radius:9px;background:var(--emerald);color:#fff;padding:9px 13px;font-weight:700;transition:transform var(--fast) var(--ease),filter var(--fast) var(--ease),box-shadow var(--normal) var(--ease),background var(--normal) var(--ease)}button:hover{filter:brightness(.97);transform:translateY(-1px);box-shadow:0 8px 20px rgba(7,26,51,.10)}button:active{transform:translateY(0) scale(.985);box-shadow:none}button.secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}button.icon-btn{width:36px;height:36px;padding:0;display:grid;place-items:center;border-radius:10px;background:#fff;color:var(--navy);border:1px solid var(--line);box-shadow:none}button.icon-btn.enabled{background:#e8f8ef;color:#12613f;border-color:#bfe5d1}button.ghost{background:transparent;color:var(--navy)}button.danger{background:var(--danger)}button.warning{background:var(--warning)}button:disabled{opacity:.45;cursor:not-allowed}
+    input,select,textarea{width:100%;border:1px solid #ccd5df;border-radius:9px;background:#fff;color:var(--ink);padding:10px 11px;transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease),background var(--fast) var(--ease)}textarea{min-height:104px;resize:vertical}input:focus,select:focus,textarea:focus{outline:0;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(24,136,101,.14)}
+    label{display:block;font-weight:700;color:#344054}label small{display:block;font-weight:400;color:var(--muted);margin-bottom:5px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.form-grid .full{grid-column:1/-1}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.card,.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.card{padding:17px;transition:transform var(--normal) var(--ease),box-shadow var(--normal) var(--ease),border-color var(--normal) var(--ease)}.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:#cdd8e3}.panel{padding:18px;margin-top:17px}
+    .metric b{display:block;font-size:27px;color:var(--emerald);line-height:1.2}.metric span{color:var(--muted)}.metric small{display:block;margin-top:6px;color:#98a2b3}
+    .split{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:17px}.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:13px}.filters{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:8px;margin:11px 0}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white}th,td{padding:10px 11px;border-bottom:1px solid #e6ebf0;text-align:left;white-space:nowrap;vertical-align:top}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#667085;background:#f7f9fb;position:sticky;top:0}tr:last-child td{border-bottom:0}tbody tr{transition:background var(--fast) var(--ease)}tbody tr:hover{background:#f8fcfa}.wrap{white-space:normal;min-width:230px}.empty{text-align:center;padding:32px;color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;background:#edf2f7;color:#344054;font-size:11px;font-weight:700}.badge.good{background:#dcf6e8;color:#12613f}.badge.warn{background:#fff0c9;color:#7c5000}.badge.bad{background:#fde3e3;color:#9f2222}.badge.info{background:#deebff;color:#194e8f}
+    .badge.cache{background:#edf2f7;color:#475467}.badge.cache.synced{background:#dcf6e8;color:#12613f}.badge.cache.cached{background:#e9f3ff;color:#194e8f}.badge.cache.offline{background:#fff0c9;color:#7c5000}.badge.cache.error{background:#fde3e3;color:#9f2222}
+    .progress{height:10px;border-radius:99px;background:#e5e9ef;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--emerald),var(--emerald2));transition:width .2s}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:5px}
+    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 15px}.tabs button{background:#eef2f5;color:var(--navy)}.tabs button.active{background:var(--navy);color:white}
+    .detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.detail-item{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff}.detail-item small{display:block;color:var(--muted);margin-bottom:3px}.detail-item b{word-break:break-word}
+    .variant{border:1px solid var(--line);border-radius:11px;margin:10px 0;background:#fff}.variant-head{display:flex;justify-content:space-between;gap:10px;padding:12px}.variant-body{border-top:1px solid var(--line);padding:12px;background:#fafcfb}
+    .dropzone{border:2px dashed #b8c4d1;border-radius:13px;padding:28px;text-align:center;background:#fbfcfd}.dropzone.drag{border-color:var(--emerald);background:#eefaf5}.dropzone input{max-width:440px;margin:12px auto 0}.manifest-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px;margin-top:15px}.preview-item{padding:12px;border:1px solid var(--line);border-radius:10px;background:white}.preview-item b{display:block;font-size:20px;color:var(--navy)}
+    .import-job{padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;margin:9px 0}.import-job-head{display:flex;justify-content:space-between;gap:12px}.job-stats{display:flex;gap:13px;flex-wrap:wrap;margin:9px 0;color:var(--muted);font-size:12px}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(6,17,32,.66);display:flex;align-items:center;justify-content:center;padding:18px;z-index:60;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--normal) var(--ease),visibility var(--normal) var(--ease);backdrop-filter:blur(4px)}.modal-backdrop.open{opacity:1;visibility:visible;pointer-events:auto}.modal{background:var(--paper);width:min(970px,100%);max-height:92vh;overflow:auto;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.3);transform:translateY(12px) scale(.985);opacity:.7;transition:transform var(--normal) var(--ease),opacity var(--normal) var(--ease)}.modal-backdrop.open .modal{transform:none;opacity:1}.modal-head{position:sticky;top:0;background:var(--paper);z-index:2;padding:17px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:center}.modal-body{padding:20px}.modal-foot{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:13px 20px;display:flex;justify-content:flex-end;gap:8px}
+    .toast{position:fixed;right:20px;bottom:20px;z-index:100;background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;box-shadow:var(--shadow);max-width:420px;opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;transition:opacity var(--normal) var(--ease),transform var(--normal) var(--ease)}.toast.show{opacity:1;transform:none}.toast.error{background:var(--danger)}
+    .busy{position:fixed;inset:0;background:rgba(255,255,255,.45);z-index:90;display:none;align-items:center;justify-content:center}.busy.show{display:flex}.spinner{width:42px;height:42px;border:4px solid #d9e4e0;border-top-color:var(--emerald);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .view-loading{padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);color:var(--muted);box-shadow:var(--shadow)}.view-loading b{display:block;color:var(--navy);margin-bottom:4px}.view-loading .mini-progress{height:6px;margin-top:12px;border-radius:99px;overflow:hidden;background:#e5e9ef}.view-loading .mini-progress span{display:block;width:38%;height:100%;background:var(--emerald);animation:cachePulse 1s ease-in-out infinite alternate}@keyframes cachePulse{to{transform:translateX(165%)}}
+    .mobile-nav{display:none}.notice{padding:12px 14px;border-radius:10px;background:#e9f3ff;color:#194e8f;border:1px solid #c7dcf7}.notice.warn{background:#fff6dc;color:#714a00;border-color:#ecd695}.notice.good{background:#e8f8ef;color:#165d3e;border-color:#c9ebd8}.code{font:12px/1.5 Consolas,monospace;white-space:pre-wrap;word-break:break-word;background:#081b32;color:#e7f3ee;border-radius:10px;padding:13px;max-height:360px;overflow:auto}
+
+    .brand small,.sub,.metric small{letter-spacing:.005em}.metric b{font-variant-numeric:tabular-nums}.badge{transition:transform var(--fast) var(--ease),background var(--normal) var(--ease)}
+    .badge:hover{transform:translateY(-1px)}.global-search input{transition:box-shadow var(--normal) var(--ease),border-color var(--normal) var(--ease),background var(--normal) var(--ease)}
+    .global-search input:focus{background:#fff;box-shadow:0 0 0 4px rgba(24,136,101,.10),0 10px 28px rgba(7,26,51,.06)}
+    .busy{backdrop-filter:blur(2px)}.spinner{box-shadow:0 0 0 1px rgba(24,136,101,.05)}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+    @media(max-width:1100px){.filters{grid-template-columns:repeat(3,1fr)}.split{grid-template-columns:1fr}.detail-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:780px){.app{display:block}.sidebar{display:none}.topbar{padding:0 12px;height:auto;min-height:64px;flex-wrap:wrap}.global-search{order:2;flex-basis:100%;padding-bottom:9px}.content{padding:17px}.mobile-nav{display:flex;position:sticky;top:0;z-index:30;background:var(--navy);overflow:auto;padding:7px;gap:5px}.mobile-nav button{white-space:nowrap;background:transparent}.mobile-nav button.active{background:rgba(66,189,145,.2)}.filters{grid-template-columns:1fr 1fr}.form-grid,.detail-grid{grid-template-columns:1fr}.section-head,.toolbar{align-items:stretch;flex-direction:column}.top-actions .secondary{display:none}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">NC</div><div><b>Ntheemba</b><small>Central Product Catalogue</small></div></div>
+    <div id="desktopNav"></div>
+    <div class="sidebar-foot"><b>NCPC source of truth</b><br>Read-only candidate API enabled for downstream product lookup.</div>
+  </aside>
+  <main class="shell">
+    <div class="mobile-nav" id="mobileNav"></div>
+    <header class="topbar">
+      <div class="global-search"><span>⌕</span><input id="globalSearch" placeholder="Search product, alias, variant or barcode…"></div>
+      <div class="top-actions"><span id="versionBadge" class="badge info">Loading…</span><span id="cacheBadge" class="badge cache">Cache cold</span><button id="soundToggle" class="icon-btn" onclick="toggleSound()" title="Enable subtle interface sounds" aria-label="Enable interface sounds" aria-pressed="false">🔇</button><button class="secondary" onclick="openDatabase()">Database</button><button onclick="openProductEditor()">+ Product</button></div>
+    </header>
+    <div class="content">
+      <section id="dashboard" class="view active"></section>
+      <section id="catalogue" class="view"></section>
+      <section id="reviews" class="view"></section>
+      <section id="barcodes" class="view"></section>
+      <section id="imports" class="view"></section>
+      <section id="organizations" class="view"></section>
+      <section id="references" class="view"></section>
+      <section id="evidence" class="view"></section>
+      <section id="releases" class="view"></section>
+      <section id="audit" class="view"></section>
+      <section id="settings" class="view"></section>
+    </div>
+  </main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Dialog</h2><button class="secondary" onclick="closeModal()">Close</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><div class="busy" id="busy"><div class="spinner"></div></div>
+<script>
+const state={
+  active:'dashboard',bootstrap:null,reference:{},catalogue:{query:'',filters:{},page:1,pageSize:25},
+  manifest:null,manifestFileName:'',currentImportJob:null,importRunning:false,importBatchProcessed:0,referenceTab:'CatalogueDomains',evidenceTab:'InformationSources'
+};
+const NCPC_UI_PREF='ncpc-ui-preferences-v1';
+const NCPC_IMPORT_QUEUE_CHUNK=100;
+const NCPC_IMPORT_UI_BATCH=100;
+const NCPC_IMPORT_SERVER_SUB_BATCH=10;
+let ncpcUiPrefs={sound:false};
+let ncpcAudioContext=null;
+try{ncpcUiPrefs=Object.assign(ncpcUiPrefs,JSON.parse(localStorage.getItem(NCPC_UI_PREF)||'{}'))}catch(ignore){}
+function syncSoundButton(){
+  if(!window.soundToggle)return;
+  soundToggle.textContent=ncpcUiPrefs.sound?'🔊':'🔇';
+  soundToggle.classList.toggle('enabled',!!ncpcUiPrefs.sound);
+  soundToggle.setAttribute('aria-pressed',String(!!ncpcUiPrefs.sound));
+  soundToggle.setAttribute('aria-label',ncpcUiPrefs.sound?'Disable interface sounds':'Enable interface sounds');
+  soundToggle.title=ncpcUiPrefs.sound?'Disable subtle interface sounds':'Enable subtle interface sounds';
+}
+function toggleSound(){
+  ncpcUiPrefs.sound=!ncpcUiPrefs.sound;
+  try{localStorage.setItem(NCPC_UI_PREF,JSON.stringify(ncpcUiPrefs))}catch(ignore){}
+  syncSoundButton();
+  if(ncpcUiPrefs.sound)playUiSound('success');
+}
+function playUiSound(kind='tap'){
+  if(!ncpcUiPrefs.sound)return;
+  try{
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtx)return;
+    ncpcAudioContext=ncpcAudioContext||new AudioCtx();
+    if(ncpcAudioContext.state==='suspended')ncpcAudioContext.resume();
+    const now=ncpcAudioContext.currentTime;
+    const oscillator=ncpcAudioContext.createOscillator();
+    const gain=ncpcAudioContext.createGain();
+    const tones={tap:[420,.025,.016],open:[520,.04,.014],close:[330,.035,.012],success:[660,.07,.018],error:[180,.09,.022]};
+    const tone=tones[kind]||tones.tap;
+    oscillator.type=kind==='error'?'triangle':'sine';
+    oscillator.frequency.setValueAtTime(tone[0],now);
+    if(kind==='success')oscillator.frequency.exponentialRampToValueAtTime(880,now+tone[1]);
+    gain.gain.setValueAtTime(0.0001,now);
+    gain.gain.exponentialRampToValueAtTime(tone[2],now+.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001,now+tone[1]);
+    oscillator.connect(gain);gain.connect(ncpcAudioContext.destination);
+    oscillator.start(now);oscillator.stop(now+tone[1]+.01);
+  }catch(ignore){}
+}
+
+const NCPC_CACHE={
+  dbName:'ncpc-admin-cache-v1',
+  store:'kv',
+  defaultTtlMs:5*60*1000,
+  referenceTtlMs:15*60*1000,
+  staleMs:24*60*60*1000,
+  revalidateAfterMs:60*1000,
+  viewReuseMs:15*1000
+};
+let ncpcCacheDbPromise=null;
+let busyDepth=0;
+let ncpcCacheEpoch=0;
+const ncpcMemoryCache=new Map();
+const ncpcInflight=new Map();
+const viewLastPaint=new Map();
+let bootstrapLoadedEpoch=-1;
+let referenceLoadedEpoch=-1;
+const NAV=[
+  ['WORKSPACE'],['dashboard','Dashboard','⌂'],['catalogue','Product Catalogue','▦'],['reviews','Review Queue','✓'],['barcodes','Barcode Verification','▥'],['imports','Import Management','⇩'],
+  ['CATALOGUE GOVERNANCE'],['organizations','Organizations','◎'],['references','Reference Data','⌘'],['evidence','Sources & Evidence','◉'],['releases','Catalogue Releases','◆'],
+  ['ADMINISTRATION'],['audit','Audit Trail','≡'],['settings','System Administration','⚙']
+];
+
+function stableStringify(value){
+  if(value===null||typeof value!=='object')return JSON.stringify(value);
+  if(Array.isArray(value))return '['+value.map(stableStringify).join(',')+']';
+  return '{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stableStringify(value[key])).join(',')+'}';
+}
+function cacheKey(name,args){return 'rpc:'+name+':'+stableStringify(args||[])}
+function setCacheStatus(label,tone='cache'){
+  if(!window.cacheBadge)return;
+  cacheBadge.textContent=label;
+  cacheBadge.className='badge cache '+tone;
+}
+function openNcpcCache(){
+  if(!window.indexedDB)return Promise.resolve(null);
+  if(ncpcCacheDbPromise)return ncpcCacheDbPromise;
+  ncpcCacheDbPromise=new Promise(resolve=>{
+    const request=indexedDB.open(NCPC_CACHE.dbName,1);
+    request.onupgradeneeded=()=>request.result.createObjectStore(NCPC_CACHE.store,{keyPath:'key'});
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>resolve(null);
+  });
+  return ncpcCacheDbPromise;
+}
+async function ncpcCacheGet(key){
+  const memory=ncpcMemoryCache.get(key);
+  if(memory)return memory;
+  try{
+    const db=await openNcpcCache();
+    if(!db)return null;
+    const record=await new Promise(resolve=>{
+      const tx=db.transaction(NCPC_CACHE.store,'readonly');
+      const request=tx.objectStore(NCPC_CACHE.store).get(key);
+      request.onsuccess=()=>resolve(request.result||null);
+      request.onerror=()=>resolve(null);
+    });
+    if(record)ncpcMemoryCache.set(key,record);
+    return record;
+  }catch(error){console.warn('NCPC cache read failed',error);return null}
+}
+async function ncpcCacheSet(key,data,epoch=ncpcCacheEpoch){
+  if(epoch!==ncpcCacheEpoch)return;
+  const record={key,data,savedAt:Date.now()};
+  ncpcMemoryCache.set(key,record);
+  try{
+    const db=await openNcpcCache();
+    if(!db)return;
+    await new Promise(resolve=>{
+      const tx=db.transaction(NCPC_CACHE.store,'readwrite');
+      tx.objectStore(NCPC_CACHE.store).put(record);
+      tx.oncomplete=()=>resolve();
+      tx.onerror=()=>resolve();
+    });
+  }catch(error){console.warn('NCPC cache write failed',error)}
+}
+async function invalidateNcpcCaches(reason='data changed'){
+  ncpcCacheEpoch++;
+  ncpcMemoryCache.clear();
+  ncpcInflight.clear();
+  viewLastPaint.clear();
+  document.querySelectorAll('.view').forEach(el=>delete el.dataset.rendered);
+  try{
+    const db=await openNcpcCache();
+    if(!db)return;
+    await new Promise(resolve=>{
+      const tx=db.transaction(NCPC_CACHE.store,'readwrite');
+      tx.objectStore(NCPC_CACHE.store).clear();
+      tx.oncomplete=()=>resolve();
+      tx.onerror=()=>resolve();
+    });
+    setCacheStatus('Cache cleared','offline');
+    console.info('NCPC local cache invalidated:',reason);
+  }catch(error){console.warn('NCPC cache clear failed',error)}
+}
+function server(name,...args){return callServer(name,args)}
+function callServer(name,args=[],options={}){
+  const showBusy=options.busy!==false;
+  if(showBusy)setBusy(true);
+  return new Promise((resolve,reject)=>{
+    if(!window.google||!google.script||!google.script.run){if(showBusy)setBusy(false);reject(new Error('This interface must run from a deployed Google Apps Script web app.'));return;}
+    google.script.run.withSuccessHandler(result=>{
+      if(showBusy)setBusy(false);
+      if(!result||!result.success){const error=new Error(result?.message||'Request failed');error.code=result?.errorCode;reject(error);return;}
+      versionBadge.textContent='Catalogue v'+result.catalogueVersion;
+      resolve(result.data);
+    }).withFailureHandler(error=>{if(showBusy)setBusy(false);reject(new Error(error?.message||'Server error'));})[name](...args);
+  });
+}
+function refreshCachedServer(key,name,args,epoch,busy=false){
+  if(ncpcInflight.has(key))return ncpcInflight.get(key);
+  const request=callServer(name,args,{busy}).then(async data=>{
+    await ncpcCacheSet(key,data,epoch);
+    if(epoch===ncpcCacheEpoch)setCacheStatus('Synced','synced');
+    return data;
+  }).finally(()=>ncpcInflight.delete(key));
+  ncpcInflight.set(key,request);
+  return request;
+}
+async function cachedServer(name,args=[],options={}){
+  const key=options.key||cacheKey(name,args);
+  const ttl=options.ttlMs??NCPC_CACHE.defaultTtlMs;
+  const revalidateAfter=options.revalidateAfterMs??Math.min(ttl,NCPC_CACHE.revalidateAfterMs);
+  const cached=await ncpcCacheGet(key);
+  const age=cached?Date.now()-Number(cached.savedAt||0):Infinity;
+  const canUseCached=!!cached&&(age<=ttl||options.allowStale===true);
+  const epoch=ncpcCacheEpoch;
+
+  if(canUseCached){
+    setCacheStatus(age<=ttl?'Cached':'Offline cache',age<=ttl?'cached':'offline');
+    const shouldRefresh=options.background!==false&&navigator.onLine!==false&&age>=revalidateAfter;
+    if(shouldRefresh){
+      refreshCachedServer(key,name,args,epoch,false).then(data=>{
+        if(typeof options.onFresh==='function')options.onFresh(data);
+      }).catch(error=>{
+        console.warn('NCPC background refresh failed',error);
+        setCacheStatus('Offline cache','offline');
+      });
+    }
+    return cached.data;
+  }
+
+  try{
+    // Reads never need to freeze the whole UI. Writes still use server(...) and keep the busy guard.
+    return await refreshCachedServer(key,name,args,epoch,options.busy===true);
+  }catch(error){
+    if(cached&&age<=NCPC_CACHE.staleMs){
+      setCacheStatus('Offline cache','offline');
+      return cached.data;
+    }
+    setCacheStatus('Cache miss','error');
+    throw error;
+  }
+}
+function cachedListRecords(tableName,filters={}){
+  return cachedServer('listNcpcRecords',[tableName,filters],{
+    key:'list:'+tableName+':'+stableStringify(filters),
+    allowStale:true
+  });
+}
+function hotCacheKeys(){
+  return [
+    'bootstrap','dashboard','reference','reviews:all',
+    cacheKey('searchNcpcCatalogue',['',{},1,25]),
+    ...['BarcodeVerificationQueue','ImportJobs','Organizations','OrganizationRoles','CatalogueDomains','Categories','Brands','InformationSources','CatalogueEvidence','CatalogueReleases','AuditEvents','SystemSettings']
+      .map(name=>'list:'+name+':'+stableStringify({}))
+  ];
+}
+function primeHotCacheFromIndexedDb(){
+  // Fire-and-forget: only warms browser RAM from IndexedDB. It makes no Apps Script calls.
+  Promise.all(hotCacheKeys().map(key=>ncpcCacheGet(key))).catch(()=>{});
+}
+function setBusy(value){
+  busyDepth=Math.max(0,busyDepth+(value?1:-1));
+  busy.classList.toggle('show',busyDepth>0);
+}
+function notify(message,error=false){toast.textContent=message;toast.className='toast show'+(error?' error':'');playUiSound(error?'error':'success');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.className='toast',3600)}
+function escapeHtml(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function label(value){return String(value||'').replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/^./,c=>c.toUpperCase())}
+function dateText(value){if(!value)return '—';const d=new Date(value);return Number.isNaN(d.getTime())?escapeHtml(value):d.toLocaleString()}
+function badge(value){const text=String(value||'unspecified');const lower=text.toLowerCase();let type='';if(['active','verified','published','completed','resolved','approved','promoted'].includes(lower))type='good';else if(['pending','draft','in_review','reviewed','processing','queued','receiving','paused','waiting_for_information'].includes(lower))type='warn';else if(['rejected','failed','cancelled','inactive','withdrawn','disputed','completed_with_errors'].includes(lower))type='bad';else type='info';return `<span class="badge ${type}">${escapeHtml(label(text))}</span>`}
+function table(columns,rows,actionRenderer){if(!rows?.length)return '<div class="empty">No records found.</div>';return `<div class="table-wrap"><table><thead><tr>${columns.map(c=>`<th>${escapeHtml(label(c))}</th>`).join('')}${actionRenderer?'<th>Actions</th>':''}</tr></thead><tbody>${rows.map(row=>`<tr>${columns.map(c=>`<td class="${['canonicalName','description','reason','title','legalName','notes'].includes(c)?'wrap':''}">${renderCell(row[c],c)}</td>`).join('')}${actionRenderer?`<td>${actionRenderer(row)}</td>`:''}</tr>`).join('')}</tbody></table></div>`}
+function renderCell(value,key){if(['status','verificationStatus','publicationStatus','qualityTier','priority','authority','evidenceTier','action'].includes(key))return badge(value);if(key.toLowerCase().includes('at')||key.toLowerCase().includes('date'))return dateText(value);if(typeof value==='boolean')return value?'Yes':'No';if(key==='url'&&value)return `<a href="${escapeHtml(value)}" target="_blank">Open source</a>`;return escapeHtml(value??'')}
+function options(rows,value,textField='name',placeholder='Select…'){return `<option value="">${placeholder}</option>`+(rows||[]).map(row=>`<option value="${escapeHtml(row.id)}" ${String(row.id)===String(value)?'selected':''}>${escapeHtml(row[textField]||row.name||row.id)}</option>`).join('')}
+function selectOptions(values,current,placeholder='Select…'){return `<option value="">${placeholder}</option>`+values.map(v=>`<option value="${escapeHtml(v)}" ${String(v)===String(current)?'selected':''}>${escapeHtml(label(v))}</option>`).join('')}
+
+function buildNav(){
+  let html='';NAV.forEach(item=>{if(item.length===1)html+=`<div class="nav-label">${item[0]}</div>`;else html+=`<button class="nav-btn ${state.active===item[0]?'active':''}" onclick="navigate('${item[0]}')"><span class="nav-icon">${item[2]}</span>${item[1]}</button>`});desktopNav.innerHTML=html;
+  mobileNav.innerHTML=NAV.filter(x=>x.length>1).map(item=>`<button class="${state.active===item[0]?'active':''}" onclick="navigate('${item[0]}')">${item[1]}</button>`).join('');
+}
+function viewLoadingHtml(view){return `<div class="view-loading"><b>Opening ${escapeHtml(label(view))}…</b><span>Checking local cache first.</span><div class="mini-progress"><span></span></div></div>`}
+function navigate(view){
+  if(state.active!==view)playUiSound('tap');
+  state.active=view;
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  const target=document.getElementById(view);
+  target.classList.add('active');
+  buildNav();
+
+  // If this screen was rendered moments ago, keep its existing DOM exactly as-is.
+  // This makes back-and-forth tab switching effectively instant.
+  const last=viewLastPaint.get(view)||0;
+  if(target.dataset.rendered==='1'&&Date.now()-last<NCPC_CACHE.viewReuseMs)return;
+  if(!target.innerHTML.trim())target.innerHTML=viewLoadingHtml(view);
+
+  Promise.resolve(renderActive(view)).then(()=>{
+    target.dataset.rendered='1';
+    viewLastPaint.set(view,Date.now());
+  }).catch(e=>notify(e.message,true));
+}
+async function renderActive(view=state.active){if(view==='dashboard')return renderDashboard();if(view==='catalogue')return renderCatalogue();if(view==='reviews')return renderReviews();if(view==='barcodes')return renderBarcodes();if(view==='imports')return renderImports();if(view==='organizations')return renderOrganizations();if(view==='references')return renderReferences();if(view==='evidence')return renderEvidence();if(view==='releases')return renderReleases();if(view==='audit')return renderAudit();if(view==='settings')return renderSettings()}
+async function refreshBootstrap(force=false){
+  if(!force&&state.bootstrap&&bootstrapLoadedEpoch===ncpcCacheEpoch){
+    cachedServer('getNcpcBootstrap',[],{
+      key:'bootstrap',ttlMs:NCPC_CACHE.referenceTtlMs,allowStale:true,busy:false,
+      onFresh:data=>{state.bootstrap=data;state.reference=data.referenceData;bootstrapLoadedEpoch=ncpcCacheEpoch;referenceLoadedEpoch=ncpcCacheEpoch;versionBadge.textContent='Catalogue v'+data.dashboard.metrics.catalogueVersion;if(state.active==='dashboard')renderDashboard().catch(()=>{})}
+    }).catch(()=>{});
+    return state.bootstrap;
+  }
+  state.bootstrap=await cachedServer('getNcpcBootstrap',[],{
+    key:'bootstrap',
+    ttlMs:NCPC_CACHE.referenceTtlMs,
+    allowStale:true,
+    busy:false,
+    onFresh:data=>{state.bootstrap=data;state.reference=data.referenceData;bootstrapLoadedEpoch=ncpcCacheEpoch;referenceLoadedEpoch=ncpcCacheEpoch;versionBadge.textContent='Catalogue v'+data.dashboard.metrics.catalogueVersion}
+  });
+  bootstrapLoadedEpoch=ncpcCacheEpoch;
+  state.reference=state.bootstrap.referenceData;
+  referenceLoadedEpoch=ncpcCacheEpoch;
+  versionBadge.textContent='Catalogue v'+state.bootstrap.dashboard.metrics.catalogueVersion;
+  return state.bootstrap;
+}
+async function refreshReference(force=false){
+  // Bootstrap already contains referenceData, so Catalogue/editor screens should not
+  // wait for a second RPC/cache round-trip every time they open.
+  if(!force&&state.reference&&Object.keys(state.reference).length&&referenceLoadedEpoch===ncpcCacheEpoch){
+    cachedServer('getNcpcReferenceData',[],{
+      key:'reference',ttlMs:NCPC_CACHE.referenceTtlMs,allowStale:true,busy:false,
+      onFresh:data=>{state.reference=data;referenceLoadedEpoch=ncpcCacheEpoch}
+    }).catch(()=>{});
+    return state.reference;
+  }
+  state.reference=await cachedServer('getNcpcReferenceData',[],{
+    key:'reference',
+    ttlMs:NCPC_CACHE.referenceTtlMs,
+    allowStale:true,
+    busy:false,
+    onFresh:data=>{state.reference=data;referenceLoadedEpoch=ncpcCacheEpoch}
+  });
+  referenceLoadedEpoch=ncpcCacheEpoch;
+  return state.reference;
+}
+function openDatabase(){const url=state.bootstrap?.database?.url;if(url)window.open(url,'_blank');else notify('Database URL is not available.',true)}
+
+function paintDashboard(data){const m=data.metrics;dashboard.innerHTML=`<div class="section-head"><div><h1>Catalogue Governance Dashboard</h1><p class="sub">A shared product-identity system with controlled evidence, review, publication and read-only downstream resolution.</p></div><div class="actions"><button class="secondary" onclick="navigate('imports')">Import catalogue</button><button onclick="openProductEditor()">Add product</button></div></div><div class="grid">${[
+['Products',m.products,'All catalogue records'],['Published',m.publishedProducts,'Available in releases'],['Draft products',m.draftProducts,'Awaiting review'],['Variants',m.variants,'Sellable product forms'],['Identifiers',m.identifiers,'Barcodes and IDs'],['Organizations',m.organizations,'Commercial entities'],['Pending reviews',m.pendingReviews,'Governance decisions'],['Barcode reviews',m.pendingBarcodes,'Identifiers awaiting proof']
+].map(x=>`<div class="card metric"><b>${x[1]}</b><span>${x[0]}</span><small>${x[2]}</small></div>`).join('')}</div><div class="split"><div><div class="panel"><div class="toolbar"><h2>Recently updated products</h2><button class="secondary" onclick="navigate('catalogue')">Open catalogue</button></div>${table(['canonicalName','qualityTier','verificationStatus','publicationStatus','updatedAt'],data.recentProducts,row=>`<button class="secondary" onclick="openProduct('${row.id}')">Open</button>`)}</div><div class="panel"><h2>Recent imports</h2>${renderImportJobs(data.recentImports)}</div></div><div><div class="panel"><h2>Quality tiers</h2>${distribution(data.qualityTiers)}</div><div class="panel"><h2>Publication status</h2>${distribution(data.publicationStatuses)}</div><div class="panel"><h2>Open review types</h2>${distribution(data.reviewTypes)}</div></div></div>`}
+async function renderDashboard(){
+  const instant=state.bootstrap?.dashboard;
+  if(instant)paintDashboard(instant);
+  const data=await cachedServer('getNcpcDashboard',[],{
+    key:'dashboard',allowStale:true,busy:false,
+    onFresh:fresh=>{if(state.bootstrap)state.bootstrap.dashboard=fresh;if(state.active==='dashboard')paintDashboard(fresh)}
+  });
+  if(state.bootstrap)state.bootstrap.dashboard=data;
+  if(!instant||data!==instant)paintDashboard(data);
+}
+function distribution(data){const entries=Object.entries(data||{});if(!entries.length)return '<div class="empty">No data yet.</div>';const total=entries.reduce((s,x)=>s+x[1],0)||1;return entries.sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div style="margin:11px 0"><div class="progress-label"><span>${escapeHtml(label(k))}</span><b>${v}</b></div><div class="progress"><span style="width:${Math.round(v/total*100)}%"></span></div></div>`).join('')}
+
+async function renderCatalogue(){await refreshReference();const f=state.catalogue.filters;const args=[state.catalogue.query,f,state.catalogue.page,state.catalogue.pageSize];const data=await cachedServer('searchNcpcCatalogue',args,{allowStale:true});const categories=(state.reference.categories||[]).filter(x=>!f.catalogueDomainId||x.catalogueDomainId===f.catalogueDomainId);catalogue.innerHTML=`<div class="section-head"><div><h1>Product Catalogue</h1><p class="sub">Canonical products, variants, identifiers, aliases, organizations and evidence.</p></div><div class="actions"><button class="secondary" onclick="downloadCatalogue(false)">Export all</button><button onclick="openProductEditor()">+ Product</button></div></div><div class="panel"><input id="catalogueSearch" value="${escapeHtml(state.catalogue.query)}" placeholder="Search names, aliases, variants or barcode…" oninput="queueCatalogueSearch(this.value)"><div class="filters"><select onchange="setCatalogueFilter('catalogueDomainId',this.value)">${options(state.reference.catalogueDomains,f.catalogueDomainId,'name','All domains')}</select><select onchange="setCatalogueFilter('categoryId',this.value)">${options(categories,f.categoryId,'name','All categories')}</select><select onchange="setCatalogueFilter('brandId',this.value)">${options(state.reference.brands,f.brandId,'name','All brands')}</select><select onchange="setCatalogueFilter('verificationStatus',this.value)">${selectOptions(state.bootstrap.enums.verificationStatuses,f.verificationStatus,'All verification')}</select><select onchange="setCatalogueFilter('publicationStatus',this.value)">${selectOptions(state.bootstrap.enums.publicationStatuses,f.publicationStatus,'All publication')}</select><select onchange="setCatalogueFilter('qualityTier',this.value)">${selectOptions(state.bootstrap.enums.evidenceTiers.concat(['manually_created']),f.qualityTier,'All quality tiers')}</select></div><div class="toolbar"><span class="sub">${data.total} product${data.total===1?'':'s'} found</span><button class="secondary" onclick="clearCatalogueFilters()">Clear filters</button></div>${table(['canonicalName','brandName','categoryName','variantCount','identifierCount','qualityTier','verificationStatus','publicationStatus','updatedAt'],data.records,row=>`<button class="secondary" onclick="openProduct('${row.id}')">Open</button>`)}</div>${pager(data)}`}
+let catalogueSearchTimer;function queueCatalogueSearch(value){clearTimeout(catalogueSearchTimer);catalogueSearchTimer=setTimeout(()=>{state.catalogue.query=value;state.catalogue.page=1;renderCatalogue().catch(e=>notify(e.message,true))},250)}
+function setCatalogueFilter(key,value){state.catalogue.filters[key]=value;if(key==='catalogueDomainId')state.catalogue.filters.categoryId='';state.catalogue.page=1;renderCatalogue().catch(e=>notify(e.message,true))}
+function clearCatalogueFilters(){state.catalogue.query='';state.catalogue.filters={};state.catalogue.page=1;renderCatalogue().catch(e=>notify(e.message,true))}
+function pager(data){const pages=Math.max(1,Math.ceil(data.total/data.pageSize));return `<div class="toolbar" style="margin-top:12px"><select style="width:100px" onchange="state.catalogue.pageSize=Number(this.value);state.catalogue.page=1;renderCatalogue()"><option ${data.pageSize===25?'selected':''}>25</option><option ${data.pageSize===50?'selected':''}>50</option><option ${data.pageSize===100?'selected':''}>100</option></select><div class="actions"><button class="secondary" ${data.page<=1?'disabled':''} onclick="state.catalogue.page--;renderCatalogue()">Previous</button><span>Page ${data.page} of ${pages}</span><button class="secondary" ${data.page>=pages?'disabled':''} onclick="state.catalogue.page++;renderCatalogue()">Next</button></div></div>`}
+
+async function openProduct(productId){openModal('Product',`<div class="view-loading"><b>Opening product…</b><span>Loading from local cache.</span><div class="mini-progress"><span></span></div></div>`,``);const data=await cachedServer('getNcpcProduct',[productId],{allowStale:true,busy:false});const p=data.product;const domain=state.reference.catalogueDomains.find(x=>x.id===p.catalogueDomainId);const category=state.reference.categories.find(x=>x.id===p.categoryId);const brand=state.reference.brands.find(x=>x.id===p.brandId);openModal(p.canonicalName,`<div class="actions" style="margin-bottom:15px"><button onclick="closeModal();openProductEditor('${p.id}')">Edit product</button><button class="secondary" onclick="publishProduct('${p.id}')">Publish</button><button class="secondary" onclick="withdrawProduct('${p.id}')">Withdraw</button><button class="secondary" onclick="openEvidenceEditor('${p.id}')">Add evidence</button><button class="secondary" onclick="openProductRelationshipEditor('${p.id}')">Link organization</button><button class="secondary" onclick="openDigitalAssetEditor('${p.id}')">Add digital asset</button></div><div class="detail-grid">${detail('Product ID',p.id)}${detail('Domain',domain?.name)}${detail('Category',category?.name)}${detail('Brand',brand?.name)}${detail('Quality tier',badge(p.qualityTier),true)}${detail('Verification',badge(p.verificationStatus),true)}${detail('Publication',badge(p.publicationStatus),true)}${detail('Status',badge(p.status),true)}${detail('Version',p.version)}</div><div class="panel"><h3>Description</h3><p>${escapeHtml(p.description||'No description')}</p></div><div class="panel"><h3>Aliases</h3>${data.aliases.length?data.aliases.map(a=>`<span class="badge info" style="margin:3px">${escapeHtml(a.alias)}</span>`).join(''):'<div class="empty">No aliases</div>'}</div><div class="panel"><h3>Product variants</h3>${data.variants.length?data.variants.map(renderVariant).join(''):'<div class="empty">No variants</div>'}</div><div class="panel"><h3>Organization relationships</h3>${table(['organizationName','relationshipType','territoryCode','verificationStatus'],data.organizationRelationships)}</div><div class="panel"><h3>Digital assets</h3>${table(['assetType','sourceUrl','caption','verificationStatus','status'],data.digitalAssets)}</div><div class="panel"><h3>Catalogue evidence</h3>${table(['claimType','claimValue','evidenceTier','confidence','verificationStatus','sourceTitle'],data.evidence)}</div>`,``)}
+function detail(name,value,raw=false){return `<div class="detail-item"><small>${escapeHtml(name)}</small><b>${raw?value:escapeHtml(value||'—')}</b></div>`}
+function renderVariant(v){return `<div class="variant"><div class="variant-head"><div><b>${escapeHtml(v.variantName)}</b><br><small>${escapeHtml([v.sizeValue,v.sizeUnit,v.packagingType].filter(Boolean).join(' · ')||'No pack details')}</small></div><div>${badge(v.verificationStatus)} ${badge(v.publicationStatus)}</div></div><div class="variant-body"><h3>Identifiers</h3>${table(['identifierValue','identifierType','isPrimary','verificationStatus','status'],v.identifiers,row=>`<button class="secondary" onclick="copyText('${escapeHtml(row.identifierValue)}')">Copy</button>`)}</div></div>`}
+async function publishProduct(id){try{await server('publishNcpcProduct',id,'Published from NCPC interface');await invalidateNcpcCaches('product published');notify('Product published');closeModal();await refreshBootstrap();renderActive()}catch(e){notify(e.message,true)}}
+async function withdrawProduct(id){if(!confirm('Withdraw this product from the published catalogue?'))return;try{await server('withdrawNcpcProduct',id,'Withdrawn from NCPC interface');await invalidateNcpcCaches('product withdrawn');notify('Product withdrawn');closeModal();await refreshBootstrap();renderActive()}catch(e){notify(e.message,true)}}
+function copyText(text){navigator.clipboard?.writeText(text);notify('Copied')}
+
+async function openProductEditor(productId){openModal(productId?'Edit product':'Create product',viewLoadingHtml(productId?'product editor':'product editor'),``);await refreshReference();let existing=null;if(productId)existing=await cachedServer('getNcpcProduct',[productId],{allowStale:true});const p=existing?.product||{};const variants=existing?.variants?.length?existing.variants:[{variantName:'',sizeValue:'',sizeUnit:'',salesUnit:'',packagingType:'',inventoryType:'piece_based',identifiers:[]}];openModal(productId?'Edit product':'Create product',`<form id="productForm"><div class="form-grid"><label>Catalogue domain<small>Broad catalogue area</small><select name="catalogueDomainId" required>${options(state.reference.catalogueDomains,p.catalogueDomainId)}</select></label><label>Category<small>Controlled product classification</small><select name="categoryId" required>${options(state.reference.categories,p.categoryId)}</select></label><label>Brand<select name="brandId">${options(state.reference.brands,p.brandId,'name','No brand')}</select></label><label>Product type<input name="productType" value="${escapeHtml(p.productType||'packaged')}"></label><label class="full">Canonical product name<input name="canonicalName" required value="${escapeHtml(p.canonicalName||'')}"></label><label class="full">Description<textarea name="description">${escapeHtml(p.description||'')}</textarea></label><label>Quality tier<select name="qualityTier">${selectOptions(state.bootstrap.enums.evidenceTiers.concat(['manually_created']),p.qualityTier||'manually_created')}</select></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,p.verificationStatus||'unverified')}</select></label><label>Publication<select name="publicationStatus">${selectOptions(state.bootstrap.enums.publicationStatuses,p.publicationStatus||'draft')}</select></label><label>Status<select name="status">${selectOptions(['active','inactive','archived'],p.status||'active')}</select></label><label class="full">Aliases<small>One alternative name per line</small><textarea name="aliases">${escapeHtml((existing?.aliases||[]).map(x=>x.alias).join('\n'))}</textarea></label></div><h3 style="margin-top:18px">Variants</h3><div id="variantEditor">${variants.map((v,i)=>variantEditor(v,i)).join('')}</div><button type="button" class="secondary" onclick="addVariantEditor()">+ Add variant</button></form>`,productId?`<button onclick="saveProduct('${productId}')">Save changes</button>`:`<button onclick="saveProduct('')">Create product</button>`)}
+function variantEditor(v,i){const identifiers=(v.identifiers||[]).map(x=>[x.identifierValue,x.identifierType,x.verificationStatus].join(' | ')).join('\n');return `<div class="variant" data-variant-index="${i}"><div class="variant-body"><div class="toolbar"><h3>Variant ${i+1}</h3>${i?`<button type="button" class="danger" onclick="this.closest('.variant').remove()">Remove</button>`:''}</div><input type="hidden" name="variantId" value="${escapeHtml(v.id||'')}"><div class="form-grid"><label>Variant name<input name="variantName" required value="${escapeHtml(v.variantName||'')}"></label><label>Packaging type<input name="packagingType" value="${escapeHtml(v.packagingType||'')}"></label><label>Size value<input name="sizeValue" type="number" step="any" value="${escapeHtml(v.sizeValue||'')}"></label><label>Size unit<input name="sizeUnit" value="${escapeHtml(v.sizeUnit||'')}"></label><label>Sales unit<input name="salesUnit" value="${escapeHtml(v.salesUnit||'')}"></label><label>Inventory type<select name="inventoryType">${selectOptions(['piece_based','weight_based','volume_based'],v.inventoryType||'piece_based')}</select></label><label class="full">Identifiers<small>One per line: value | type | verification</small><textarea name="identifiers">${escapeHtml(identifiers)}</textarea></label></div></div></div>`}
+function addVariantEditor(){const holder=document.createElement('div');holder.innerHTML=variantEditor({},document.querySelectorAll('#variantEditor .variant').length);variantEditorEl.appendChild(holder.firstElementChild)}
+async function saveProduct(id){try{const form=document.getElementById('productForm');const base=Object.fromEntries(new FormData(form));const variants=[...document.querySelectorAll('#variantEditor .variant')].map(card=>({id:card.querySelector('[name=variantId]').value||undefined,variantName:card.querySelector('[name=variantName]').value,sizeValue:card.querySelector('[name=sizeValue]').value,sizeUnit:card.querySelector('[name=sizeUnit]').value,salesUnit:card.querySelector('[name=salesUnit]').value,packagingType:card.querySelector('[name=packagingType]').value,inventoryType:card.querySelector('[name=inventoryType]').value,verificationStatus:base.verificationStatus,publicationStatus:base.publicationStatus,status:'active',identifiers:card.querySelector('[name=identifiers]').value.split('\n').map(x=>x.trim()).filter(Boolean).map(line=>{const [identifierValue,identifierType,verificationStatus]=line.split('|').map(x=>x.trim());return{identifierValue,identifierType:identifierType||'EAN13',verificationStatus:verificationStatus||'unverified'}})}));const bundle={id:id||undefined,catalogueDomainId:base.catalogueDomainId,categoryId:base.categoryId,brandId:base.brandId,canonicalName:base.canonicalName,description:base.description,productType:base.productType,qualityTier:base.qualityTier,verificationStatus:base.verificationStatus,publicationStatus:base.publicationStatus,status:base.status,aliases:base.aliases.split('\n').map(x=>x.trim()).filter(Boolean),variants};await server('saveNcpcProductBundle',bundle);await invalidateNcpcCaches(id?'product updated':'product created');notify(id?'Product updated':'Product created');closeModal();await refreshBootstrap();navigate('catalogue')}catch(e){notify(e.message,true)}}
+
+async function renderReviews(){const rows=await cachedServer('getNcpcReviewQueue',[{}],{key:'reviews:all',allowStale:true});reviews.innerHTML=`<div class="section-head"><div><h1>Review Queue</h1><p class="sub">Product identity, publication, market confirmation and barcode governance decisions.</p></div><button class="secondary" onclick="renderReviews()">Refresh</button></div><div class="panel"><div class="filters"><select id="reviewStatus" onchange="filterReviewTable()">${selectOptions(['pending','in_progress','waiting_for_information','resolved'],'pending','All statuses')}</select><select id="reviewType" onchange="filterReviewTable()">${selectOptions([...new Set(rows.map(x=>x.queueType))],'','All review types')}</select><select id="reviewPriority" onchange="filterReviewTable()">${selectOptions(state.bootstrap.enums.priorities,'','All priorities')}</select></div><div id="reviewTable" data-rows="${escapeHtml(JSON.stringify(rows))}"></div></div>`;filterReviewTable()}
+function filterReviewTable(){const all=JSON.parse(document.getElementById('reviewTable').dataset.rows||'[]');const status=document.getElementById('reviewStatus').value,type=document.getElementById('reviewType').value,priority=document.getElementById('reviewPriority').value;const filtered=all.filter(x=>(!status||x.status===status)&&(!type||x.queueType===type)&&(!priority||x.priority===priority));reviewTable.innerHTML=table(['queueType','entityType','entityId','priority','reason','status','createdAt'],filtered,row=>`<button onclick="openReview('${row.id}')">Review</button>`) }
+async function openReview(id){
+  openModal('Review',viewLoadingHtml('review context'),``);
+  const data=await cachedServer('getNcpcReviewContext',[id],{allowStale:true,busy:false});
+  const r=data.review,e=data.entity;
+  let preview='';
+  if(data.productContext){
+    preview=`<h3>Product context</h3><div class="detail-grid">${detail('Name',data.productContext.product.canonicalName)}${detail('Quality',badge(data.productContext.product.qualityTier),true)}${detail('Verification',badge(data.productContext.product.verificationStatus),true)}${detail('Publication',badge(data.productContext.product.publicationStatus),true)}</div>`;
+  }else if(r.entityType==='ProductCandidates'&&e){
+    preview=`<h3>New product candidate</h3><div class="detail-grid">${detail('Name',e.rawName)}${detail('Origin',e.originReference)}${detail('Status',badge(e.status),true)}</div><details style="margin-top:12px"><summary>Submitted product data</summary><div class="code">${escapeHtml(JSON.stringify(e.parsedPayload||{},null,2))}</div></details>`;
+  }else if(r.entityType==='CorrectionSubmissions'&&e){
+    preview=`<h3>Catalogue correction</h3><div class="detail-grid">${detail('Target',`${e.targetEntityType} · ${e.targetEntityId}`)}${detail('Field',e.fieldName)}${detail('Current value',e.currentValue||'—')}${detail('Proposed value',e.proposedValue||'—')}${detail('Shop',e.shopId)}${detail('Status',badge(e.status),true)}</div>${e.description?`<h3 style="margin-top:14px">Description</h3><p>${escapeHtml(e.description)}</p>`:''}`;
+  }else if(e){
+    preview=`<h3>Submitted record</h3><div class="code">${escapeHtml(JSON.stringify(e,null,2))}</div>`;
+  }
+  const evidence=(data.submissionEvidence||[]);
+  const evidenceHtml=evidence.length?`<h3 style="margin-top:16px">Physical evidence</h3><div class="grid">${evidence.map(item=>`<div class="detail-item"><b>${escapeHtml(label(item.evidenceType||'evidence'))}</b><span>${escapeHtml(item.fileName||item.mimeType||'Submitted evidence')}</span>${item.sourceUrl?`<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener" style="margin-top:6px">Open evidence ↗</a>`:''}</div>`).join('')}</div>`:`<div class="notice warn" style="margin-top:14px">No physical-evidence file is attached to this submission yet.</div>`;
+  let choices='';
+  if(r.entityType==='ProductCandidates'){
+    choices=`<button onclick="resolveReview('${r.id}','promote_candidate')">Promote to draft</button><button class="secondary" onclick="resolveReview('${r.id}','request_information')">Need information</button><button class="danger" onclick="resolveReview('${r.id}','reject')">Reject</button>`;
+  }else if(r.entityType==='CorrectionSubmissions'){
+    choices=`<button onclick="resolveReview('${r.id}','accept_correction')">Accept evidence</button><button class="secondary" onclick="resolveReview('${r.id}','request_information')">Need information</button><button class="danger" onclick="resolveReview('${r.id}','reject')">Reject</button>`;
+  }else{
+    choices=`<button onclick="resolveReview('${r.id}','approve_identity')">Approve identity</button><button onclick="resolveReview('${r.id}','publish')">Publish</button><button class="secondary" onclick="resolveReview('${r.id}','request_information')">Need information</button><button class="danger" onclick="resolveReview('${r.id}','reject')">Reject</button>`;
+  }
+  openModal(label(r.queueType),`<div class="notice warn">${escapeHtml(r.reason)}</div>${preview}${evidenceHtml}<label style="margin-top:16px">Review notes<textarea id="reviewNotes"></textarea></label>`,choices);
+}
+async function resolveReview(id,resolution){try{await server('resolveNcpcReview',id,resolution,document.getElementById('reviewNotes')?.value||'');await invalidateNcpcCaches('review resolved');notify('Review resolved');closeModal();await refreshBootstrap();renderReviews()}catch(e){notify(e.message,true)}}
+
+async function renderBarcodes(){const queue=await cachedListRecords('BarcodeVerificationQueue',{});barcodes.innerHTML=`<div class="section-head"><div><h1>Barcode Verification</h1><p class="sub">No barcode becomes a trusted identifier until physical or authoritative evidence confirms it.</p></div><button onclick="openBarcodeSubmission()">Submit barcode</button></div><div class="panel">${table(['identifierValue','identifierType','variantId','submissionSource','status','submittedBy','createdAt'],queue,row=>row.status==='pending'?`<button onclick="openBarcodeDecision('${row.id}','${escapeHtml(row.identifierValue)}')">Verify</button>`:'')}</div>`}
+function openBarcodeSubmission(){openModal('Submit barcode for verification',`<form id="barcodeForm"><div class="form-grid"><label>Variant ID<small>Open a product to find its variant ID</small><input name="variantId" required></label><label>Identifier value<input name="identifierValue" required></label><label>Identifier type<select name="identifierType">${selectOptions(['EAN13','EAN8','UPC','GTIN14','CODE128'],'EAN13')}</select></label><label>Submission source<select name="submissionSource">${selectOptions(['physical_scan','product_label','manufacturer_source','distributor_source','manual_entry'],'physical_scan')}</select></label><label class="full">Product photo URL<input name="photoUrl" type="url"></label><label class="full">Information source ID<input name="sourceId"></label></div></form>`,`<button onclick="submitBarcode()">Submit for review</button>`)}
+async function submitBarcode(){try{const data=Object.fromEntries(new FormData(document.getElementById('barcodeForm')));await server('submitBarcodeForVerification',data);await invalidateNcpcCaches('barcode submitted');notify('Barcode submitted');closeModal();renderBarcodes()}catch(e){notify(e.message,true)}}
+function openBarcodeDecision(id,value){openModal('Verify '+value,`<div class="notice warn">Confirm this identifier against the physical label, GS1 record, manufacturer or authorized distributor.</div><label style="margin-top:14px">Verification notes<textarea id="barcodeNotes"></textarea></label>`,`<button onclick="resolveBarcode('${id}','verify')">Verify barcode</button><button class="danger" onclick="resolveBarcode('${id}','reject')">Reject</button>`)}
+async function resolveBarcode(id,decision){try{await server('resolveBarcodeVerification',id,decision,document.getElementById('barcodeNotes').value);await invalidateNcpcCaches('barcode decision saved');notify('Barcode decision saved');closeModal();await refreshBootstrap();renderBarcodes()}catch(e){notify(e.message,true)}}
+
+async function renderImports(){const jobs=await cachedListRecords('ImportJobs',{});imports.innerHTML=`<div class="section-head"><div><h1>Import Management</h1><p class="sub">Validate, queue and process large NCPC research manifests in resumable 100-product batches.</p></div><button class="secondary" onclick="renderImports()">Refresh</button></div><div class="split"><div><div class="panel"><h2>New research import</h2><div class="dropzone" id="dropzone"><b>Select an NCPC research manifest</b><p class="sub">Supported schema: <code>apps-script-research-import-v1</code></p><input type="file" id="manifestFile" accept="application/json,.json" onchange="loadManifestFile(this.files[0])"></div><div id="manifestPreview"></div></div><div class="panel"><h2>Safe import policy</h2><div class="notice good">Official exact and institution-linked records become draft products. Market pack-size hypotheses enter Product Candidates and Review Queue instead of the published catalogue.</div></div></div><div><div class="panel"><h2>Import controls</h2><div id="activeImport">${state.currentImportJob?renderActiveImport(state.currentImportJob):'<div class="empty">No active import in this browser.</div>'}</div></div></div></div><div class="panel"><h2>Import history</h2>${renderImportJobs(jobs.slice().reverse())}</div>`;wireDropzone()}
+function wireDropzone(){const dz=document.getElementById('dropzone');if(!dz)return;['dragenter','dragover'].forEach(evt=>dz.addEventListener(evt,e=>{e.preventDefault();dz.classList.add('drag')}));['dragleave','drop'].forEach(evt=>dz.addEventListener(evt,e=>{e.preventDefault();dz.classList.remove('drag')}));dz.addEventListener('drop',e=>loadManifestFile(e.dataTransfer.files[0]))}
+async function loadManifestFile(file){if(!file)return;try{const text=await file.text();const manifest=JSON.parse(text);if(manifest.schemaVersion!=='apps-script-research-import-v1')throw new Error('Unsupported schema: '+manifest.schemaVersion);if(!Array.isArray(manifest.bundles))throw new Error('The manifest has no bundles array.');state.manifest=manifest;state.manifestFileName=file.name;const tiers={};manifest.bundles.forEach(b=>{const tier=b.research?.institutionExpansion?.evidenceTier||(b.product?.verificationStatus==='reviewed'?'official_exact':'institution_linked_family');tiers[tier]=(tiers[tier]||0)+1});manifestPreview.innerHTML=`<div class="manifest-preview"><div class="preview-item"><b>${manifest.bundles.length}</b>Products/candidates</div><div class="preview-item"><b>${manifest.sources?.length||0}</b>Information sources</div><div class="preview-item"><b>${NCPC_IMPORT_UI_BATCH}</b>Products per UI batch</div><div class="preview-item"><b>${NCPC_IMPORT_SERVER_SUB_BATCH}</b>Per server execution</div>${Object.entries(tiers).map(([k,v])=>`<div class="preview-item"><b>${v}</b>${escapeHtml(label(k))}</div>`).join('')}</div><div class="notice warn" style="margin-top:12px">Manifest: ${escapeHtml(manifest.manifestId||file.name)}. Sources and products are queued in chunks of 100. Processing then runs 100 products at a time using short resumable Apps Script calls, so a timeout never restarts the import from zero.</div><div class="actions" style="margin-top:12px"><button onclick="startManifestImport()">Start batched import</button><button class="secondary" onclick="state.manifest=null;manifestPreview.innerHTML=''">Clear</button></div>`}catch(e){notify(e.message,true)}}
+async function startManifestImport(){if(!state.manifest||state.importRunning)return;state.importRunning=true;try{await invalidateNcpcCaches('import started');const manifest=state.manifest;let job=await server('createNcpcImportJob',{manifestId:manifest.manifestId||'',schemaVersion:manifest.schemaVersion,fileName:state.manifestFileName,marketCode:(manifest.market?.countryCode||manifest.market?.code||(typeof manifest.market==='string'?manifest.market:'ZM')),totalItems:manifest.bundles.length},[]);state.currentImportJob=job;renderActiveImportPanel();await queueManifestIntoJob(job.id);notify('Catalogue queued. Processing the first 100-product batch.');}catch(e){notify(e.message,true)}finally{state.importRunning=false}if(state.currentImportJob&&Number(state.currentImportJob.queuedItems)>=Number(state.currentImportJob.totalItems))await runImportProcessing(state.currentImportJob.id,NCPC_IMPORT_UI_BATCH)}
+async function queueManifestIntoJob(jobId){if(!state.manifest)throw new Error('Reload the JSON manifest in this browser before queueing.');const manifest=state.manifest;let job=state.currentImportJob;for(let i=0;i<(manifest.sources||[]).length;i+=NCPC_IMPORT_QUEUE_CHUNK){const response=await server('appendNcpcImportSources',jobId,(manifest.sources||[]).slice(i,i+NCPC_IMPORT_QUEUE_CHUNK));job=response.job;state.currentImportJob=job;renderActiveImportPanel()}for(let i=0;i<manifest.bundles.length;i+=NCPC_IMPORT_QUEUE_CHUNK){const response=await server('appendNcpcImportItems',jobId,i,manifest.bundles.slice(i,i+NCPC_IMPORT_QUEUE_CHUNK));job=response.job;state.currentImportJob=job;renderActiveImportPanel()}return job}
+async function runImportProcessing(jobId,logicalBatchSize=NCPC_IMPORT_UI_BATCH){if(state.importRunning)return;state.importRunning=true;let processedInLogicalBatch=0;try{let complete=false;while(!complete&&processedInLogicalBatch<logicalBatchSize){const remaining=logicalBatchSize-processedInLogicalBatch;const response=await server('processNcpcImportBatch',jobId,Math.min(NCPC_IMPORT_SERVER_SUB_BATCH,remaining));state.currentImportJob=response.job;processedInLogicalBatch+=Number(response.processedThisBatch||0);state.importBatchProcessed=processedInLogicalBatch;renderActiveImportPanel();complete=['completed','completed_with_errors','cancelled'].includes(response.job.status);if(!complete&&response.processedThisBatch===0)break}await invalidateNcpcCaches('import processed');if(complete){notify('Import processing completed');await refreshBootstrap();renderImports()}else{notify(`Batch complete: ${processedInLogicalBatch} products processed. ${state.currentImportJob.processedItems}/${state.currentImportJob.totalItems} total.`);renderActiveImportPanel()}}catch(e){notify(`Batch stopped safely after ${processedInLogicalBatch} product(s): ${e.message}`,true);renderActiveImportPanel()}finally{state.importRunning=false}}
+function renderActiveImportPanel(){const target=document.getElementById('activeImport');if(target)target.innerHTML=renderActiveImport(state.currentImportJob)}
+function renderActiveImport(job){const closed=['completed','completed_with_errors','cancelled'].includes(job.status);const receiving=Number(job.queuedItems||0)<Number(job.totalItems||0);const remaining=Math.max(0,Number(job.totalItems||0)-Number(job.processedItems||0));return `<div class="import-job"><div class="import-job-head"><div><b>${escapeHtml(job.fileName)}</b><br><small>${escapeHtml(job.id)} · ${escapeHtml(job.manifestId||'No manifest ID')}</small></div>${badge(job.status)}</div><div class="job-stats"><span>Queued: ${job.queuedItems}/${job.totalItems}</span><span>Processed: ${job.processedItems}</span><span>Remaining: ${remaining}</span><span>Created: ${job.createdItems}</span><span>Merged: ${job.mergedItems}</span><span>Candidates: ${job.candidateItems}</span><span>Failed: ${job.failedItems}</span></div><div class="progress"><span style="width:${Number(job.progressPercent||0)}%"></span></div><div class="progress-label"><span>${escapeHtml(label(job.currentStage))}</span><b>${job.progressPercent||0}%</b></div>${!closed?`<div class="notice good" style="margin-top:10px">Safe mode: each click processes up to <b>100 products</b>, internally split into ${NCPC_IMPORT_SERVER_SUB_BATCH}-product Apps Script executions. Progress is saved after every sub-batch.</div>`:''}<div class="actions" style="margin-top:12px">${!closed&&receiving&&state.manifest?`<button onclick="queueManifestIntoJob('${job.id}').then(()=>notify('Remaining manifest records queued')).catch(e=>notify(e.message,true))">Queue remaining file</button>`:''}${!closed&&!receiving?`<button onclick="runImportProcessing('${job.id}',${NCPC_IMPORT_UI_BATCH})">Process next 100</button>`:''}${!closed?`<button class="secondary" onclick="pauseImport('${job.id}')">Pause</button><button class="danger" onclick="cancelImport('${job.id}')">Cancel</button>`:''}${Number(job.failedItems)>0?`<button class="warning" onclick="retryImport('${job.id}')">Retry failed</button>`:''}</div>${job.errorSummary?`<div class="notice warn" style="margin-top:10px">${escapeHtml(job.errorSummary)}</div>`:''}</div>`}
+function renderImportJobs(jobs){if(!jobs?.length)return '<div class="empty">No import jobs yet.</div>';return jobs.map(job=>`<div class="import-job"><div class="import-job-head"><div><b>${escapeHtml(job.fileName||job.manifestId)}</b><br><small>${escapeHtml(job.id)} · ${dateText(job.createdAt)}</small></div>${badge(job.status)}</div><div class="progress"><span style="width:${Number(job.progressPercent||0)}%"></span></div><div class="job-stats"><span>${job.processedItems}/${job.totalItems} processed</span><span>${job.createdItems} created</span><span>${job.mergedItems} merged</span><span>${job.candidateItems} candidates</span><span>${job.failedItems} failed</span></div>${!['completed','completed_with_errors','cancelled'].includes(job.status)?`<button class="secondary" onclick="openImportJob('${job.id}')">Open</button>`:''}</div>`).join('')}
+async function openImportJob(id){const jobs=await cachedListRecords('ImportJobs',{});state.currentImportJob=jobs.find(x=>x.id===id)||null;await navigate('imports')}
+async function pauseImport(id){try{state.currentImportJob=await server('pauseNcpcImportJob',id);await invalidateNcpcCaches('import paused');renderActiveImportPanel();notify('Import paused')}catch(e){notify(e.message,true)}}
+async function cancelImport(id){if(!confirm('Cancel this import job? Imported records will remain.'))return;try{state.currentImportJob=await server('cancelNcpcImportJob',id);await invalidateNcpcCaches('import cancelled');renderActiveImportPanel();notify('Import cancelled')}catch(e){notify(e.message,true)}}
+async function retryImport(id){try{await server('retryFailedNcpcImportItems',id);await invalidateNcpcCaches('import retry');notify('Failed items re-queued');runImportProcessing(id,NCPC_IMPORT_UI_BATCH)}catch(e){notify(e.message,true)}}
+
+async function renderOrganizations(){const [orgRows,roles]=await Promise.all([cachedListRecords('Organizations',{}),cachedListRecords('OrganizationRoles',{})]);const grouped={};roles.forEach(r=>(grouped[r.organizationId]??=[]).push(r.roleType));orgRows.forEach(o=>o.roleSummary=(grouped[o.id]||[]).map(label).join(', '));document.getElementById('organizations').innerHTML=`<div class="section-head"><div><h1>Organizations</h1><p class="sub">Companies, authorities and commercial entities connected to brands, products and evidence.</p></div><button onclick="openOrganizationEditor()">+ Organization</button></div><div class="panel">${table(['legalName','tradingName','countryCode','roleSummary','verificationStatus','status','updatedAt'],orgRows,row=>`<button class="secondary" onclick="openOrganizationEditor('${row.id}')">Edit</button>`)}</div>`}
+async function openOrganizationEditor(id){openModal(id?'Edit organization':'Create organization',viewLoadingHtml('organization editor'),``);const [orgs,roles]=await Promise.all([cachedListRecords('Organizations',{}),cachedListRecords('OrganizationRoles',{})]);const o=orgs.find(x=>x.id===id)||{};const selected=roles.filter(x=>x.organizationId===id).map(x=>x.roleType);openModal(id?'Edit organization':'Create organization',`<form id="organizationForm"><div class="form-grid"><label>Legal name<input name="legalName" required value="${escapeHtml(o.legalName||'')}"></label><label>Trading name<input name="tradingName" value="${escapeHtml(o.tradingName||'')}"></label><label>Country code<input name="countryCode" value="${escapeHtml(o.countryCode||'ZM')}"></label><label>Website URL<input name="websiteUrl" type="url" value="${escapeHtml(o.websiteUrl||'')}"></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,o.verificationStatus||'unverified')}</select></label><label>Status<select name="status">${selectOptions(['active','inactive'],o.status||'active')}</select></label><label class="full">Organization roles<small>Select all applicable roles</small><div class="grid">${state.bootstrap.enums.organizationRoles.map(role=>`<label class="detail-item"><input style="width:auto" type="checkbox" name="roles" value="${role}" ${selected.includes(role)?'checked':''}> ${escapeHtml(label(role))}</label>`).join('')}</div></label><label class="full">Description<textarea name="description">${escapeHtml(o.description||'')}</textarea></label></div></form>`,`<button onclick="saveOrganization('${id||''}')">Save organization</button>`)}
+async function saveOrganization(id){try{const form=document.getElementById('organizationForm'),fd=new FormData(form),data=Object.fromEntries(fd);data.id=id||undefined;data.roles=fd.getAll('roles').map(roleType=>({roleType,territoryCode:data.countryCode||'ZM',verificationStatus:data.verificationStatus,status:'active'}));await server('saveNcpcOrganization',data);await invalidateNcpcCaches('organization saved');notify('Organization saved');closeModal();await refreshBootstrap();renderOrganizations()}catch(e){notify(e.message,true)}}
+
+async function renderReferences(){const tabs=['CatalogueDomains','Categories','Brands'];const tableName=state.referenceTab;const rows=await cachedListRecords(tableName,{});references.innerHTML=`<div class="section-head"><div><h1>Reference Data</h1><p class="sub">Controlled catalogue domains, categories and brand identities.</p></div><button onclick="openReferenceEditor('${tableName}')">+ ${escapeHtml(label(tableName.replace(/s$/,'')))}</button></div><div class="tabs">${tabs.map(t=>`<button class="${t===tableName?'active':''}" onclick="state.referenceTab='${t}';renderReferences()">${label(t)}</button>`).join('')}</div><div class="panel">${table(referenceColumns(tableName),rows,row=>`<button class="secondary" onclick="openReferenceEditor('${tableName}','${row.id}')">Edit</button>`)}</div>`}
+function referenceColumns(name){if(name==='CatalogueDomains')return['name','description','status','updatedAt'];if(name==='Categories')return['name','catalogueDomainId','parentCategoryId','description','status'];return['name','description','verificationStatus','status','updatedAt']}
+async function openReferenceEditor(tableName,id){openModal((id?'Edit ':'Create ')+label(tableName.replace(/s$/,'')),viewLoadingHtml('reference editor'),``);const rows=await cachedListRecords(tableName,{}),r=rows.find(x=>x.id===id)||{};let fields='';if(tableName==='CatalogueDomains')fields=`<label>Name<input name="name" required value="${escapeHtml(r.name||'')}"></label>`;if(tableName==='Categories')fields=`<label>Catalogue domain<select name="catalogueDomainId" required>${options(state.reference.catalogueDomains,r.catalogueDomainId)}</select></label><label>Parent category<select name="parentCategoryId">${options(state.reference.categories,r.parentCategoryId,'name','No parent')}</select></label><label>Name<input name="name" required value="${escapeHtml(r.name||'')}"></label>`;if(tableName==='Brands')fields=`<label>Name<input name="name" required value="${escapeHtml(r.name||'')}"></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,r.verificationStatus||'unverified')}</select></label>`;openModal((id?'Edit ':'Create ')+label(tableName.replace(/s$/,'')),`<form id="referenceForm"><div class="form-grid">${fields}<label>Status<select name="status">${selectOptions(['active','inactive'],r.status||'active')}</select></label><label class="full">Description<textarea name="description">${escapeHtml(r.description||'')}</textarea></label></div></form>`,`<button onclick="saveReference('${tableName}','${id||''}')">Save</button>`)}
+async function saveReference(tableName,id){try{const data=Object.fromEntries(new FormData(document.getElementById('referenceForm')));if(id)await server('updateNcpcRecord',tableName,id,data);else await server('createNcpcRecord',tableName,data);await invalidateNcpcCaches('reference saved');notify('Reference record saved');closeModal();await refreshBootstrap();renderReferences()}catch(e){notify(e.message,true)}}
+
+async function renderEvidence(){const tabs=['InformationSources','CatalogueEvidence'];const t=state.evidenceTab;const rows=await cachedListRecords(t,{});evidence.innerHTML=`<div class="section-head"><div><h1>Sources & Evidence</h1><p class="sub">Trace every important catalogue claim back to its information source.</p></div><button onclick="${t==='InformationSources'?'openSourceEditor()':'openEvidenceEditor()'}">+ ${t==='InformationSources'?'Source':'Evidence'}</button></div><div class="tabs">${tabs.map(x=>`<button class="${x===t?'active':''}" onclick="state.evidenceTab='${x}';renderEvidence()">${label(x)}</button>`).join('')}</div><div class="panel">${table(t==='InformationSources'?['title','sourceType','authority','url','status','updatedAt']:['productId','variantId','claimType','claimValue','evidenceTier','confidence','verificationStatus','sourceId'],rows,t==='InformationSources'?row=>`<button class="secondary" onclick="openSourceEditor('${row.id}')">Edit</button>`:null)}</div>`}
+async function openSourceEditor(id){openModal(id?'Edit information source':'Create information source',viewLoadingHtml('source editor'),``);const rows=await cachedListRecords('InformationSources',{}),s=rows.find(x=>x.id===id)||{};openModal(id?'Edit information source':'Create information source',`<form id="sourceForm"><div class="form-grid"><label>External source ID<input name="externalSourceId" value="${escapeHtml(s.externalSourceId||'')}"></label><label>Title<input name="title" required value="${escapeHtml(s.title||'')}"></label><label>URL<input name="url" type="url" value="${escapeHtml(s.url||'')}"></label><label>Source type<input name="sourceType" value="${escapeHtml(s.sourceType||'manufacturer_official')}"></label><label>Authority<select name="authority">${selectOptions(['official','authoritative','primary_shop_record','trusted_secondary','unverified'],s.authority||'unverified')}</select></label><label>Organization<select name="organizationId">${options(state.reference.organizations,s.organizationId,'tradingName','No organization')}</select></label><label>Document date<input type="date" name="documentDate" value="${escapeHtml(s.documentDate||'')}"></label><label>Status<select name="status">${selectOptions(['active','inactive'],s.status||'active')}</select></label><label class="full">Notes<textarea name="notes">${escapeHtml(s.notes||'')}</textarea></label></div></form>`,`<button onclick="saveSource('${id||''}')">Save source</button>`)}
+async function saveSource(id){try{const data=Object.fromEntries(new FormData(document.getElementById('sourceForm')));data.id=id||undefined;await server('saveNcpcSource',data);await invalidateNcpcCaches('source saved');notify('Information source saved');closeModal();await refreshBootstrap();renderEvidence()}catch(e){notify(e.message,true)}}
+async function openEvidenceEditor(productId=''){openModal('Add catalogue evidence',viewLoadingHtml('evidence editor'),``);await refreshReference();openModal('Add catalogue evidence',`<form id="evidenceForm"><div class="form-grid"><label>Product ID<input name="productId" required value="${escapeHtml(productId)}"></label><label>Variant ID<input name="variantId"></label><label>Information source<select name="sourceId">${options(state.reference.informationSources,'','title','No source')}</select></label><label>Claim type<input name="claimType" required placeholder="canonical_name, pack_size, manufacturer…"></label><label class="full">Claim value<textarea name="claimValue"></textarea></label><label>Evidence tier<select name="evidenceTier">${selectOptions(state.bootstrap.enums.evidenceTiers,'official_exact')}</select></label><label>Confidence<select name="confidence">${selectOptions(['unknown','low','medium','high'],'medium')}</select></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,'unverified')}</select></label><label class="full">Review notes<textarea name="reviewNotes"></textarea></label></div></form>`,`<button onclick="saveEvidence()">Add evidence</button>`)}
+async function saveEvidence(){try{const data=Object.fromEntries(new FormData(document.getElementById('evidenceForm')));await server('addNcpcEvidence',data);await invalidateNcpcCaches('evidence added');notify('Evidence added');closeModal();if(state.active==='evidence')renderEvidence()}catch(e){notify(e.message,true)}}
+
+async function openProductRelationshipEditor(productId,variantId=''){openModal('Link organization to product',viewLoadingHtml('relationship editor'),``);await refreshReference();openModal('Link organization to product',`<form id="productRelationshipForm"><div class="form-grid"><label>Product ID<input name="productId" value="${escapeHtml(productId)}" required></label><label>Variant ID<input name="variantId" value="${escapeHtml(variantId)}"></label><label>Organization<select name="organizationId" required>${options(state.reference.organizations,'','tradingName')}</select></label><label>Relationship type<select name="relationshipType">${selectOptions(state.bootstrap.enums.organizationRelationships,'manufactured_by')}</select></label><label>Territory code<input name="territoryCode" value="ZM"></label><label>Information source<select name="sourceId">${options(state.reference.informationSources,'','title','No source')}</select></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,'unverified')}</select></label><input type="hidden" name="status" value="active"></div></form>`,`<button onclick="saveProductRelationship()">Save relationship</button>`)}
+async function saveProductRelationship(){try{const data=Object.fromEntries(new FormData(document.getElementById('productRelationshipForm')));await server('createNcpcRecord','ProductOrganizationRelationships',data);await invalidateNcpcCaches('product relationship saved');notify('Organization relationship saved');closeModal()}catch(e){notify(e.message,true)}}
+async function openDigitalAssetEditor(productId,variantId=''){openModal('Add digital asset',viewLoadingHtml('digital asset editor'),``);await refreshReference();openModal('Add digital asset',`<form id="digitalAssetForm"><div class="form-grid"><label>Product ID<input name="productId" required value="${escapeHtml(productId)}"></label><label>Variant ID<input name="variantId" value="${escapeHtml(variantId)}"></label><label>Asset type<select name="assetType">${selectOptions(['image','video','document','label_scan'],'image')}</select></label><label>Source URL<input name="sourceUrl" type="url" required></label><label>Storage URL<input name="storageUrl" type="url"></label><label>Information source<select name="sourceId">${options(state.reference.informationSources,'','title','No source')}</select></label><label>Verification<select name="verificationStatus">${selectOptions(state.bootstrap.enums.verificationStatuses,'unverified')}</select></label><label>Status<select name="status">${selectOptions(['active','inactive'],'active')}</select></label><label class="full">Caption<textarea name="caption"></textarea></label></div></form>`,`<button onclick="saveDigitalAsset()">Save asset</button>`)}
+async function saveDigitalAsset(){try{const data=Object.fromEntries(new FormData(document.getElementById('digitalAssetForm')));await server('createNcpcRecord','DigitalAssets',data);await invalidateNcpcCaches('digital asset saved');notify('Digital asset saved');closeModal()}catch(e){notify(e.message,true)}}
+
+async function renderReleases(){const releasesData=await cachedListRecords('CatalogueReleases',{});releases.innerHTML=`<div class="section-head"><div><h1>Catalogue Releases</h1><p class="sub">Immutable snapshots of products and variants approved for downstream use.</p></div><div class="actions"><button class="secondary" onclick="downloadCatalogue(false)">Export full draft</button><button class="secondary" onclick="downloadCatalogue(true)">Export published</button><button onclick="openReleaseEditor()">Create release</button></div></div><div class="panel">${table(['releaseName','releaseVersion','status','productCount','variantCount','publishedAt','publishedBy'],releasesData.slice().reverse())}</div>`}
+function openReleaseEditor(){openModal('Create catalogue release',`<form id="releaseForm"><div class="form-grid"><label>Release name<input name="releaseName" required></label><label class="full">Description<textarea name="description"></textarea></label></div></form>`,`<button onclick="createRelease()">Publish release</button>`)}
+async function createRelease(){try{const data=Object.fromEntries(new FormData(document.getElementById('releaseForm')));const release=await server('createNcpcRelease',data.releaseName,data.description);await invalidateNcpcCaches('release created');notify('Release created: '+release.releaseVersion);closeModal();renderReleases()}catch(e){notify(e.message,true)}}
+async function downloadCatalogue(publishedOnly){try{const data=await cachedServer('exportNcpcCatalogue',[{publishedOnly}],{key:'export:'+(publishedOnly?'published':'full'),ttlMs:60*1000,allowStale:true});const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`ncpc-${publishedOnly?'published':'full'}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),500);notify('Catalogue JSON prepared')}catch(e){notify(e.message,true)}}
+
+async function renderAudit(){const rows=await cachedListRecords('AuditEvents',{});audit.innerHTML=`<div class="section-head"><div><h1>Audit Trail</h1><p class="sub">Who changed what, when, and why.</p></div><button class="secondary" onclick="renderAudit()">Refresh</button></div><div class="panel">${table(['timestamp','userEmail','action','entityType','entityId','notes'],rows.slice().reverse().slice(0,500),row=>`<button class="secondary" onclick="showAudit('${row.id}')">Details</button>`)}</div>`}
+async function showAudit(id){const rows=await cachedListRecords('AuditEvents',{}),r=rows.find(x=>x.id===id);openModal('Audit event '+id,`<div class="detail-grid">${detail('Action',r.action)}${detail('Entity',r.entityType)}${detail('Entity ID',r.entityId)}${detail('User',r.userEmail)}${detail('Time',dateText(r.timestamp),true)}</div><h3 style="margin-top:15px">Notes</h3><p>${escapeHtml(r.notes||'')}</p><h3>Previous value</h3><div class="code">${escapeHtml(formatJson(r.oldValue))}</div><h3 style="margin-top:12px">New value</h3><div class="code">${escapeHtml(formatJson(r.newValue))}</div>`,``)}
+function formatJson(value){try{return JSON.stringify(JSON.parse(value),null,2)}catch{return value||''}}
+
+async function renderSettings(){
+  const settingsData=await cachedListRecords('SystemSettings',{});
+  const db=state.bootstrap.database;
+  const integration=state.bootstrap.integration||{};
+  const apiTemplate=integration.candidateUrlTemplate||'';
+  settings.innerHTML=`
+    <div class="section-head">
+      <div><h1>System Administration</h1><p class="sub">NCPC database identity, schema, runtime settings, candidate search and reviewed TradeFlow submissions.</p></div>
+      <button onclick="reinitialize()">Verify database structure</button>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Database</h3><p><b>${escapeHtml(db.name)}</b></p><p class="sub">${escapeHtml(db.id)}</p><button class="secondary" onclick="openDatabase()">Open spreadsheet</button></div>
+      <div class="card"><h3>Application</h3><p><b>${escapeHtml(state.bootstrap.application.version)}</b></p><p class="sub">Schema ${escapeHtml(state.bootstrap.application.schemaVersion)}</p></div>
+      <div class="card"><h3>Integration state</h3><p><b>${integration.readOnlyCandidateApi?'Candidate API enabled':'UI only'}</b></p><p class="sub">${integration.readOnlyCandidateApi?'TradeFlow can resolve shared product identity. Shop price, cost, stock and supplier data remain outside NCPC.':'No public candidate endpoint is active.'}</p></div><div class="card"><h3>TradeFlow submissions</h3><p><b>${integration.authenticatedSubmissionApi?(integration.writeApiConfigured?'Write API configured':'Write API needs key'):'Disabled'}</b></p><p class="sub">Submissions enter review queues only; they do not directly overwrite authoritative catalogue records.</p></div>
+    </div>
+    <div class="panel">
+      <h2>Candidate API</h2>
+      <p class="sub">The same web-app deployment serves this admin UI, the read-only candidate endpoint, and authenticated server-to-server submission routes.</p>
+      ${apiTemplate?`<div class="code">${escapeHtml(apiTemplate)}</div><div class="actions" style="margin-top:12px"><button class="secondary" onclick="openCandidateApiHealth()">Open health endpoint</button><button class="secondary" onclick="copyCandidateApiTemplate()">Copy endpoint template</button></div>`:'<div class="notice warn">No deployed web-app URL is visible to this execution yet. Deploy/update the project as a web app.</div>'}
+      <div class="form-grid" style="margin-top:14px">
+        <label class="full">Resolver test<small>Uses the same candidate resolver as the HTTP endpoint.</small><input id="candidateApiTestQuery" value="Vatra 750 ml"></label>
+      </div>
+      <div class="actions" style="margin-top:10px"><button onclick="testCandidateResolver()">Test candidate resolver</button></div>
+      <div id="candidateApiTestResult" style="margin-top:12px"></div>
+    </div>
+    <div class="panel"><h2>System settings</h2>${table(['key','value','description','updatedAt'],settingsData)}</div>
+    <div class="panel"><h2>Database tables</h2><p class="sub">The initializer verifies all intended NCPC tables and columns without clearing existing catalogue data.</p><div class="notice good">Products, variants, identifiers, organizations, brands, catalogue evidence, product candidates, barcode verification, correction submissions, submission evidence, review queues, imports, releases, settings, sequences and audit tables are included.</div></div>`;
+}
+function openCandidateApiHealth(){
+  const url=state.bootstrap?.integration?.healthUrl||'';
+  if(!url){notify('No deployed web-app URL is available.',true);return}
+  window.open(url,'_blank','noopener');
+}
+async function copyCandidateApiTemplate(){
+  const value=state.bootstrap?.integration?.candidateUrlTemplate||'';
+  if(!value){notify('No candidate API URL is available.',true);return}
+  try{await navigator.clipboard.writeText(value);notify('Candidate API template copied')}
+  catch(e){
+    const area=document.createElement('textarea');area.value=value;document.body.appendChild(area);area.select();
+    document.execCommand('copy');area.remove();notify('Candidate API template copied');
+  }
+}
+async function testCandidateResolver(){
+  const input=document.getElementById('candidateApiTestQuery');
+  const target=document.getElementById('candidateApiTestResult');
+  const query=(input?.value||'').trim();
+  if(!query){notify('Enter a product name to test.',true);return}
+  target.innerHTML=viewLoadingHtml('candidate resolver');
+  try{
+    const data=await server('findNcpcCandidates',query,{limit:6,publishedOnly:false,activeOnly:true});
+    const candidates=data.candidates||[];
+    target.innerHTML=candidates.length
+      ? table(['canonicalName','variantName','brandName','sizeValue','sizeUnit','matchReason','score'],candidates)
+      : '<div class="notice warn">No candidates returned for this query.</div>';
+  }catch(e){
+    target.innerHTML=`<div class="notice bad">${escapeHtml(e.message)}</div>`;
+  }
+}
+async function reinitialize(){try{const result=await server('initializeNcpcSystem');await invalidateNcpcCaches('database structure verified');notify(result.alreadyInitialized?'Database structure is ready':'Database initialized');await refreshBootstrap();renderSettings()}catch(e){notify(e.message,true)}}
+
+function openModal(title,body,footer=''){playUiSound('open');modalTitle.textContent=title;modalBody.innerHTML=body;modalFoot.innerHTML=footer;modalBackdrop.classList.add('open');window.variantEditorEl=document.getElementById('variantEditor')}
+function closeModal(){playUiSound('close');modalBackdrop.classList.remove('open');setTimeout(()=>{if(!modalBackdrop.classList.contains('open')){modalBody.innerHTML='';modalFoot.innerHTML=''}},220)}
+modalBackdrop.addEventListener('click',event=>{if(event.target===modalBackdrop)closeModal()});
+globalSearch.addEventListener('keydown',event=>{if(event.key==='Enter'){state.catalogue.query=event.target.value;state.catalogue.page=1;navigate('catalogue')}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modalBackdrop.classList.contains('open'))closeModal()});
+window.addEventListener('scroll',()=>document.querySelector('.topbar')?.classList.toggle('scrolled',window.scrollY>6),{passive:true});
+
+async function start(){syncSoundButton();buildNav();primeHotCacheFromIndexedDb();if(!dashboard.innerHTML.trim())dashboard.innerHTML=viewLoadingHtml('dashboard');try{await refreshBootstrap();await renderDashboard();dashboard.dataset.rendered='1';viewLastPaint.set('dashboard',Date.now());primeHotCacheFromIndexedDb()}catch(e){dashboard.innerHTML=`<div class="panel"><h1>NCPC could not start</h1><p>${escapeHtml(e.message)}</p><button onclick="start()">Retry</button></div>`;notify(e.message,true)}}
+document.addEventListener('DOMContentLoaded',start);
+</script>
+</body>
+</html>

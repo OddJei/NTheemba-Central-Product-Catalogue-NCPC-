@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "zambia-retail-source-coverage-v1",
+  "market": "Zambia",
+  "purpose": "A controlled discovery register. A listed organization is not proof that every product or SKU is in the master catalogue; only source-backed product records are imported.",
+  "sources": [
+    {
+      "organization": "Coca-Cola Beverages Zambia",
+      "organizationType": "manufacturer_or_bottler",
+      "officialUrl": "https://www.coca-cola.com/xe/en/legal/terms-and-conditions-zambia-scan-enjoy",
+      "categories": ["Beverages"],
+      "discoveryStatus": "partially_processed",
+      "masterProducts": ["Coca-Cola Original Taste", "Coca-Cola No Sugar", "Fanta Orange", "Sprite"],
+      "nextEvidenceNeeded": ["Official Zambia product catalogue", "Package-level GTINs", "Clean original product image URLs"]
+    },
+    {
+      "organization": "Trade Kings Group",
+      "organizationType": "manufacturer",
+      "officialUrl": "https://www.tradekings.co.zm/about-us/",
+      "categories": ["Household Cleaning", "Personal Care", "Confectionery", "Baked Goods", "Dairy", "Beverages", "Foods"],
+      "discoveryStatus": "partially_processed",
+      "masterProducts": ["Boom Detergent Paste", "Boom Bubble Plus Washing Powder Original"],
+      "nextEvidenceNeeded": ["Individual official product pages with exact variants", "Package-level GTINs", "Raw product image URLs"]
+    },
+    {
+      "organization": "Dairy Gold",
+      "organizationType": "associated_manufacturer",
+      "officialUrl": "https://www.dairygold.co.zm/",
+      "categories": ["Dairy and Eggs"],
+      "discoveryStatus": "brands_identified_variant_evidence_needed",
+      "masterProducts": [],
+      "identifiedBrands": ["Ama SipSip", "Twin Cows", "Shake 'n Sip", "Milkit", "Nutro Charge", "MaxiMoo", "Juice-it", "Tropix", "Cream-it"],
+      "nextEvidenceNeeded": ["Official Dairy Gold product and size pages", "Package-level photographs or distributor catalogue", "GTINs"]
+    },
+    {
+      "organization": "Big Tree Beverages",
+      "organizationType": "associated_manufacturer",
+      "officialUrl": "https://www.bigtreebev.com/",
+      "categories": ["Beverages", "Juices", "Energy Drinks"],
+      "discoveryStatus": "brands_identified_variant_evidence_needed",
+      "masterProducts": [],
+      "identifiedBrands": ["Fruiticana", "Sun Dance", "Juwisy", "Fresh Up", "Fruit Top", "Vatra", "C-Shot", "Kombucha", "Fruiticana Smoothie"],
+      "nextEvidenceNeeded": ["Official product catalogue with exact brand, size, and packaging evidence", "Package-level photographs or distributor catalogue", "GTINs"]
+    }
+  ],
+  "exclusions": [
+    { "organization": "Tradebrands Import and Distribution Zambia", "reason": "Verified distributor, but currently sourced portfolio is tyres, pumps, batteries, air conditioners, and pressure washers rather than Retail & Grocery products.", "sourceUrl": "https://www.tradebrands.co.zm/abouttradebrands" },
+    { "organization": "Zambian Breweries", "reason": "Alcohol catalogue is intentionally excluded from the current Retail & Grocery seed scope and should be handled in a separately governed liquor batch.", "sourceUrl": "https://en.wikipedia.org/wiki/Zambian_Breweries" }
+  ]
+}

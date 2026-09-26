@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "catalogue_id": "CATALOG-NTHEEMBA-RETAIL-SEED-01",
+  "status": "review",
+  "business_types": [
+    { "id": "BT-RETAIL-GROCERY", "name": "Retail & Grocery", "status": "published" }
+  ],
+  "categories": [
+    { "id": "CAT-RETAIL-BEVERAGES", "name": "Beverages", "business_type_id": "BT-RETAIL-GROCERY", "status": "published" },
+    { "id": "CAT-RETAIL-WATER", "name": "Water", "business_type_id": "BT-RETAIL-GROCERY", "parent_category_id": "CAT-RETAIL-BEVERAGES", "status": "published" },
+    { "id": "CAT-RETAIL-FRESH-PRODUCE", "name": "Fresh Produce", "business_type_id": "BT-RETAIL-GROCERY", "status": "published" }
+  ],
+  "manufacturers": [
+    { "id": "MFG-COCA-COLA", "name": "The Coca-Cola Company", "status": "review", "source": { "type": "catalogue_research", "reference": "Seed record awaiting regional package verification", "verification_status": "reviewed" } },
+    { "id": "MFG-NTHEEMBA", "name": "Ntheemba", "status": "published", "source": { "type": "internal", "reference": "Ntheemba generated identifier", "verification_status": "verified" } }
+  ],
+  "brands": [
+    { "id": "BRD-COCA-COLA", "name": "Coca-Cola", "manufacturer_id": "MFG-COCA-COLA", "status": "review" },
+    { "id": "BRD-GENERIC-PRODUCE", "name": "Generic Produce", "manufacturer_id": "MFG-NTHEEMBA", "status": "published" }
+  ],
+  "products": [
+    { "id": "PRD-COCA-COLA-ORIGINAL", "name": "Coca-Cola Original Taste", "business_type_id": "BT-RETAIL-GROCERY", "category_id": "CAT-RETAIL-BEVERAGES", "brand_id": "BRD-COCA-COLA", "description": "Carbonated soft drink product family.", "status": "review" },
+    { "id": "PRD-TOMATOES", "name": "Tomatoes", "business_type_id": "BT-RETAIL-GROCERY", "category_id": "CAT-RETAIL-FRESH-PRODUCE", "brand_id": "BRD-GENERIC-PRODUCE", "description": "Fresh tomatoes; the business chooses its local selling unit.", "status": "published" }
+  ],
+  "variants": [
+    { "id": "VAR-COCA-COLA-ORIGINAL-500ML-PET", "name": "Coca-Cola Original Taste 500 ml PET bottle", "product_id": "PRD-COCA-COLA-ORIGINAL", "inventory_type": "packaged", "size": 500, "unit": "ml", "packaging": "PET bottle", "status": "review" },
+    { "id": "VAR-TOMATOES-BULK", "name": "Tomatoes bulk", "product_id": "PRD-TOMATOES", "inventory_type": "weight_based", "unit": "kg", "status": "published" }
+  ],
+  "barcodes": [
+    { "id": "BAR-NTH-COCA-COLA-500ML", "variant_id": "VAR-COCA-COLA-ORIGINAL-500ML-PET", "value": "NTH-RETAIL-COCA-COLA-ORIGINAL-500ML-PET", "kind": "ntheemba_generated", "symbology": "CODE_128", "verification_status": "verified" },
+    { "id": "BAR-NTH-TOMATOES-BULK", "variant_id": "VAR-TOMATOES-BULK", "value": "NTH-RETAIL-TOMATOES-BULK", "kind": "ntheemba_generated", "symbology": "CODE_128", "verification_status": "verified" }
+  ],
+  "media": []
+}

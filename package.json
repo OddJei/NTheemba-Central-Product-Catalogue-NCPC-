@@ -1,0 +1,15 @@
+{
+  "name": "ntheemba-central-catalogue",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Schemas, seed data, and validation for the Ntheemba central catalogue.",
+  "scripts": {
+    "validate": "node scripts/validate-catalog.mjs && node scripts/validate-apps-script-research-import.mjs",
+    "validate:research": "node scripts/validate-apps-script-research-import.mjs",
+    "simulate:research-import": "node scripts/simulate-apps-script-import.mjs",
+    "test:research-guards": "node scripts/test-research-import-guards.mjs",
+    "test:candidates": "node scripts/test-candidate-search-contract.mjs",
+    "start": "node server.mjs",
+    "test": "node scripts/api-smoke-test.mjs"
+  }
+}

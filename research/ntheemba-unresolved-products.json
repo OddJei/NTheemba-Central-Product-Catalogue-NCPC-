@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "ntheemba-unresolved-products-v1",
+  "market": "Zambia",
+  "items": [
+    { "originalName": "Braiding Hair", "originalCategory": "Salon & Beauty demo seed", "possibleMatches": [], "missingInformation": ["Zambia manufacturer", "brand", "pack size", "barcode", "source image"], "notes": "Excluded from the Retail & Grocery master by scope. Keep for a separate Salon & Beauty research batch.", "recommendedManualAction": "Start a separate salon catalogue batch with local supplier or package photographs." },
+    { "originalName": "Mirinda 500 ml", "originalCategory": "Beverage discovery lead", "possibleMatches": ["Mirinda disposable 500 ml"], "missingInformation": ["Zambia manufacturer/distributor", "exact flavour", "package barcode", "source image"], "notes": "ZPPA groups Mirinda with Pepsi and 7UP at 500 ml, but this is insufficient to assert its local manufacturer or package details.", "recommendedManualAction": "Locate an official Zambia distributor/manufacturer page or scan local packaging." },
+    { "originalName": "Pepsi 500 ml", "originalCategory": "Beverage discovery lead", "possibleMatches": ["Pepsi disposable 500 ml"], "missingInformation": ["Zambia manufacturer/distributor", "exact variant", "package barcode", "source image"], "notes": "ZPPA groups Pepsi with Mirinda and 7UP at 500 ml.", "recommendedManualAction": "Locate an official Zambia distributor/manufacturer page or scan local packaging." },
+    { "originalName": "7UP 500 ml", "originalCategory": "Beverage discovery lead", "possibleMatches": ["7UP disposable 500 ml"], "missingInformation": ["Zambia manufacturer/distributor", "package barcode", "source image"], "notes": "ZPPA groups 7UP with Mirinda and Pepsi at 500 ml.", "recommendedManualAction": "Locate an official Zambia distributor/manufacturer page or scan local packaging." }
+  ]
+}

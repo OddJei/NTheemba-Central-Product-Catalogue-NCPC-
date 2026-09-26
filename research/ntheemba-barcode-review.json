@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "ntheemba-barcode-review-v1",
+  "market": "Zambia",
+  "duplicateBarcodeValues": [],
+  "conflicts": [
+    { "barcodeValue": "5449000000996", "proposedAssignment": "Coca-Cola Original Taste 500 ml disposable bottle", "finding": "Rejected", "reason": "Independent barcode references describe this GTIN as a 330 ml Coca-Cola can in Belgium/Luxembourg, not an evidenced Zambia 500 ml package.", "sourceUrl": "https://data.wireshape.com/registry/0x0000000000000000000000000000000000000000000000000005449000000996", "recommendedAction": "Scan a Zambia 500 ml package and match its GTIN to package text before adding it." }
+  ],
+  "invalidCheckDigits": [],
+  "weakEvidence": [
+    { "productKey": "coca-cola-original-taste", "variantKey": "coca-cola-original-taste-500ml-disposable", "status": "not_found", "reason": "No exact Zambia package GTIN found in this batch." },
+    { "productKey": "coca-cola-no-sugar", "variantKey": "coca-cola-no-sugar-500ml-disposable", "status": "not_found", "reason": "No exact Zambia package GTIN found in this batch." },
+    { "productKey": "fanta-orange", "variantKey": "fanta-orange-500ml-disposable", "status": "not_found", "reason": "No exact Zambia package GTIN found in this batch." },
+    { "productKey": "sprite", "variantKey": "sprite-500ml-disposable", "status": "not_found", "reason": "No exact Zambia package GTIN found in this batch." },
+    { "productKey": "tomatoes-fresh", "variantKey": "tomatoes-per-kg", "status": "not_applicable", "reason": "Bulk fresh produce does not normally have a manufacturer GTIN." }
+  ]
+}

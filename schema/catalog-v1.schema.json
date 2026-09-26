@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.ntheemba.example/central-catalogue/catalog-v1.schema.json",
+  "title": "Ntheemba Central Catalogue v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalogue_id", "status", "business_types", "categories", "manufacturers", "brands", "products", "variants", "barcodes", "media"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "catalogue_id": { "type": "string", "pattern": "^CATALOG-[A-Z0-9-]+$" },
+    "status": { "enum": ["draft", "review", "published", "retired"] },
+    "business_types": { "$ref": "#/$defs/businessTypes" },
+    "categories": { "$ref": "#/$defs/categories" },
+    "manufacturers": { "$ref": "#/$defs/manufacturers" },
+    "brands": { "$ref": "#/$defs/brands" },
+    "products": { "$ref": "#/$defs/products" },
+    "variants": { "$ref": "#/$defs/variants" },
+    "barcodes": { "$ref": "#/$defs/barcodes" },
+    "media": { "$ref": "#/$defs/media" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Z]{2,8}-[A-Z0-9-]+$" },
+    "record": { "type": "object", "required": ["id", "name", "status"], "properties": { "id": { "$ref": "#/$defs/id" }, "name": { "type": "string", "minLength": 1 }, "status": { "enum": ["draft", "review", "published", "retired"] }, "replaced_by_id": { "$ref": "#/$defs/id" }, "source": { "$ref": "#/$defs/source" } } },
+    "source": { "type": "object", "required": ["type", "reference", "verification_status"], "properties": { "type": { "enum": ["manufacturer", "retailer", "catalogue_research", "business_contribution", "internal"] }, "reference": { "type": "string", "minLength": 1 }, "verification_status": { "enum": ["unverified", "reviewed", "verified", "rejected"] } } },
+    "businessTypes": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "properties": { "id": { "pattern": "^BT-" } } }] } },
+    "categories": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "required": ["business_type_id"], "properties": { "id": { "pattern": "^CAT-" }, "business_type_id": { "$ref": "#/$defs/id" }, "parent_category_id": { "$ref": "#/$defs/id" } } }] } },
+    "manufacturers": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "properties": { "id": { "pattern": "^MFG-" } } }] } },
+    "brands": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "required": ["manufacturer_id"], "properties": { "id": { "pattern": "^BRD-" }, "manufacturer_id": { "$ref": "#/$defs/id" } } }] } },
+    "products": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "required": ["business_type_id", "category_id"], "properties": { "id": { "pattern": "^PRD-" }, "business_type_id": { "$ref": "#/$defs/id" }, "category_id": { "$ref": "#/$defs/id" }, "brand_id": { "$ref": "#/$defs/id" }, "description": { "type": "string" } } }] } },
+    "variants": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/record" }, { "required": ["product_id", "inventory_type", "unit"], "properties": { "id": { "pattern": "^VAR-" }, "product_id": { "$ref": "#/$defs/id" }, "inventory_type": { "enum": ["packaged", "weight_based", "volume_based", "piece_based"] }, "unit": { "type": "string", "minLength": 1 }, "size": { "type": "number", "exclusiveMinimum": 0 }, "packaging": { "type": "string" }, "media_id": { "$ref": "#/$defs/id" } } }] } },
+    "barcodes": { "type": "array", "items": { "type": "object", "required": ["id", "variant_id", "value", "kind", "symbology", "verification_status"], "properties": { "id": { "pattern": "^BAR-" }, "variant_id": { "$ref": "#/$defs/id" }, "value": { "type": "string", "minLength": 1 }, "kind": { "enum": ["manufacturer", "ntheemba_generated"] }, "symbology": { "enum": ["EAN_13", "EAN_8", "UPC_A", "CODE_128", "QR"] }, "verification_status": { "enum": ["unverified", "reviewed", "verified", "rejected"] } } } },
+    "media": { "type": "array", "items": { "type": "object", "required": ["id", "status", "source"], "properties": { "id": { "pattern": "^MED-" }, "status": { "enum": ["pending", "approved", "rejected"] }, "source": { "$ref": "#/$defs/source" }, "source_url": { "type": "string", "format": "uri" }, "permanent_url": { "type": "string", "format": "uri" } } } }
+  }
+}

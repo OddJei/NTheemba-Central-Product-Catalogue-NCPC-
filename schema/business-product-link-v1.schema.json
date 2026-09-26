@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.ntheemba.example/central-catalogue/business-product-link-v1.schema.json",
+  "title": "TradeFlow business product catalog link v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalogue_variant_id", "catalogue_schema_version", "linked_at"],
+  "properties": {
+    "catalogue_variant_id": { "type": "string", "pattern": "^VAR-[A-Z0-9-]+$" },
+    "catalogue_product_id": { "type": "string", "pattern": "^PRD-[A-Z0-9-]+$" },
+    "catalogue_schema_version": { "const": "1.0" },
+    "linked_at": { "type": "string", "format": "date-time" },
+    "local_display_name": { "type": "string", "minLength": 1 },
+    "local_media_override_url": { "type": "string", "format": "uri" }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "apps-script-research-import-v1",
+  "manifestId": "ZMB-RESEARCH-2026-07-17-001",
+  "country": "ZM",
+  "researchPolicy": "Only source-backed shared facts are included. Every bundle imports as draft/review. A blank CODE128 barcode requests an Ntheemba-generated barcode; it is not a manufacturer GTIN.",
+  "referenceData": {
+    "businessTypes": [
+      { "name": "Retail & Grocery", "description": "Everyday retail and grocery products", "status": "active" }
+    ],
+    "categories": [
+      { "name": "Beverages", "businessTypeName": "Retail & Grocery", "description": "Non-alcoholic beverages", "status": "active" },
+      { "name": "Fresh Produce", "businessTypeName": "Retail & Grocery", "description": "Fresh fruit and vegetables", "status": "active" }
+    ],
+    "manufacturers": [
+      { "name": "Coca-Cola Beverages Zambia", "description": "Zambia Coca-Cola product promoter and local catalogue manufacturer reference", "status": "active" }
+    ],
+    "brands": [
+      { "name": "Coca-Cola", "manufacturerName": "Coca-Cola Beverages Zambia", "description": "Coca-Cola trademark beverage range", "status": "active" },
+      { "name": "Fanta", "manufacturerName": "Coca-Cola Beverages Zambia", "description": "Fanta beverage range", "status": "active" },
+      { "name": "Sprite", "manufacturerName": "Coca-Cola Beverages Zambia", "description": "Sprite beverage range", "status": "active" }
+    ]
+  },
+  "bundles": [
+    {
+      "businessType": { "name": "Retail & Grocery" },
+      "category": { "name": "Beverages" },
+      "manufacturer": { "name": "Coca-Cola Beverages Zambia" },
+      "brand": { "name": "Coca-Cola" },
+      "product": { "globalName": "Coca-Cola Original Taste", "description": "Carbonated soft drink. Zambia 500 ml package presence is source-backed; local package GTIN remains to be scanned and verified.", "productType": "packaged", "verificationStatus": "reviewed", "status": "draft" },
+      "variants": [
+        { "variantName": "500 ml disposable bottle", "sizeValue": 500, "sizeUnit": "ml", "salesUnit": "bottle", "packagingType": "disposable bottle", "inventoryType": "piece_based", "barcodes": [ { "barcodeValue": "", "barcodeType": "CODE128", "sourceType": "ntheemba_generated", "isPrimary": true, "verificationStatus": "reviewed", "status": "active" } ] }
+      ],
+      "aliases": ["Coke", "Coca Cola"],
+      "research": { "sourceIds": ["SRC-COCA-ZM-500ML", "SRC-ZPPA-SOFT-DRINK-500ML"], "manufacturerBarcodeStatus": "not_verified_for_Zambian_500ml_package" }
+    },
+    {
+      "businessType": { "name": "Retail & Grocery" },
+      "category": { "name": "Beverages" },
+      "manufacturer": { "name": "Coca-Cola Beverages Zambia" },
+      "brand": { "name": "Coca-Cola" },
+      "product": { "globalName": "Coca-Cola No Sugar", "description": "Coca-Cola no-sugar product family offered in the Zambia 500 ml Coca-Cola product range.", "productType": "packaged", "verificationStatus": "reviewed", "status": "draft" },
+      "variants": [
+        { "variantName": "500 ml disposable bottle", "sizeValue": 500, "sizeUnit": "ml", "salesUnit": "bottle", "packagingType": "disposable bottle", "inventoryType": "piece_based", "barcodes": [ { "barcodeValue": "", "barcodeType": "CODE128", "sourceType": "ntheemba_generated", "isPrimary": true, "verificationStatus": "reviewed", "status": "active" } ] }
+      ],
+      "aliases": ["Coke No Sugar", "Coca-Cola Zero Sugar"],
+      "research": { "sourceIds": ["SRC-COCA-ZM-500ML"], "manufacturerBarcodeStatus": "not_verified_for_Zambian_500ml_package" }
+    },
+    {
+      "businessType": { "name": "Retail & Grocery" },
+      "category": { "name": "Beverages" },
+      "manufacturer": { "name": "Coca-Cola Beverages Zambia" },
+      "brand": { "name": "Fanta" },
+      "product": { "globalName": "Fanta Orange", "description": "Orange-flavoured carbonated soft drink. Zambia 500 ml package presence is source-backed; local package GTIN remains to be scanned and verified.", "productType": "packaged", "verificationStatus": "reviewed", "status": "draft" },
+      "variants": [
+        { "variantName": "500 ml disposable bottle", "sizeValue": 500, "sizeUnit": "ml", "salesUnit": "bottle", "packagingType": "disposable bottle", "inventoryType": "piece_based", "barcodes": [ { "barcodeValue": "", "barcodeType": "CODE128", "sourceType": "ntheemba_generated", "isPrimary": true, "verificationStatus": "reviewed", "status": "active" } ] }
+      ],
+      "aliases": ["Orange Fanta"],
+      "research": { "sourceIds": ["SRC-COCA-ZM-500ML", "SRC-ZPPA-SOFT-DRINK-500ML", "SRC-FANTA-ZM-500ML"], "manufacturerBarcodeStatus": "not_verified_for_Zambian_500ml_package" }
+    },
+    {
+      "businessType": { "name": "Retail & Grocery" },
+      "category": { "name": "Beverages" },
+      "manufacturer": { "name": "Coca-Cola Beverages Zambia" },
+      "brand": { "name": "Sprite" },
+      "product": { "globalName": "Sprite", "description": "Lemon-lime carbonated soft drink in the Zambia 500 ml Coca-Cola product range.", "productType": "packaged", "verificationStatus": "reviewed", "status": "draft" },
+      "variants": [
+        { "variantName": "500 ml disposable bottle", "sizeValue": 500, "sizeUnit": "ml", "salesUnit": "bottle", "packagingType": "disposable bottle", "inventoryType": "piece_based", "barcodes": [ { "barcodeValue": "", "barcodeType": "CODE128", "sourceType": "ntheemba_generated", "isPrimary": true, "verificationStatus": "reviewed", "status": "active" } ] }
+      ],
+      "aliases": [],
+      "research": { "sourceIds": ["SRC-COCA-ZM-500ML", "SRC-ZPPA-SOFT-DRINK-500ML"], "manufacturerBarcodeStatus": "not_verified_for_Zambian_500ml_package" }
+    },
+    {
+      "businessType": { "name": "Retail & Grocery" },
+      "category": { "name": "Fresh Produce" },
+      "product": { "globalName": "Tomatoes", "description": "Fresh tomatoes sold by weight in Zambia. The business chooses its local selling format; this catalogue variant is per kilogram.", "productType": "fresh", "verificationStatus": "reviewed", "status": "draft" },
+      "variants": [
+        { "variantName": "Per kilogram", "sizeValue": 1, "sizeUnit": "kg", "salesUnit": "kg", "packagingType": "loose", "inventoryType": "weight_based", "barcodes": [ { "barcodeValue": "", "barcodeType": "CODE128", "sourceType": "ntheemba_generated", "isPrimary": true, "verificationStatus": "reviewed", "status": "active" } ] }
+      ],
+      "aliases": [],
+      "research": { "sourceIds": ["SRC-ZAMSTATS-TOMATOES-KG"], "manufacturerBarcodeStatus": "not_applicable_fresh_bulk_product" }
+    }
+  ],
+  "researchQueue": [
+    { "productHint": "Braiding Hair", "reason": "Existing Apps Script demo product; Zambia manufacturer, brand, pack size and barcode source not yet verified.", "status": "needs_source" },
+    { "productHint": "Mirinda 500 ml", "reason": "ZPPA reports 500 ml disposable availability; identify Zambia manufacturer/brand source before import.", "status": "needs_manufacturer_source" },
+    { "productHint": "Pepsi 500 ml", "reason": "ZPPA reports 500 ml disposable availability; identify Zambia manufacturer/brand source before import.", "status": "needs_manufacturer_source" },
+    { "productHint": "7UP 500 ml", "reason": "ZPPA reports 500 ml disposable availability; identify Zambia manufacturer/brand source before import.", "status": "needs_manufacturer_source" }
+  ]
+}
