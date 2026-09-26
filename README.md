@@ -1,5 +1,19 @@
 # Sprint 02.0-02.1 NCPC baseline and domain design
 
+## Repository purpose
+
+This repository is the public evidence and showcase copy of the NTheemba
+Central Product Catalogue (NCPC). It was created so the catalogue identity
+authority, domain design, API boundary and validation material can be viewed
+independently while remaining part of the wider Ntheemba Digital Services
+platform.
+
+Parent platform: [NTheemba Platform](https://github.com/OddJei/NTheemba-Platform)
+
+NCPC owns shared product identity and approved publication identity. It does
+not own a business's private price, stock, supplier, availability or policy
+facts; those remain in TradeFlow and other authoritative business systems.
+
 Status: `DOCUMENTED / NO RUNTIME OR APPLICATION CHANGE`
 
 This directory is the evidence package for the user-scoped Sprint 02.0 and
